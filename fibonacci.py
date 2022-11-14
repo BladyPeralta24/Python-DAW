@@ -18,5 +18,5 @@ while aux < fin:
     fibonacci_1 = int(fibonacci_2)
     fibonacci_2 = aux
     if aux <= fin:
-        print (str(aux), end=", . ")
+        print (str(aux), end=", ")
         
