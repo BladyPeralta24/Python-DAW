@@ -1,4 +1,4 @@
-### Prueba para meterlo en Github ##
+### Prueba para meterlo en Github ###
 
 inicio = int(input("Introduce el primer numero para la sucesion de fibonacci: "))
 fin = int(input("Introduce el segundo numero mayor al primero: "))

@@ -1,5 +1,5 @@
 
-## Prueba para meterlo en Github ##
+## Prueba para meterlo en Github ###
 
 #inicio = input("Introduce la letra de inicio: ")
 #final = input("Introduce la letra de final: ")
