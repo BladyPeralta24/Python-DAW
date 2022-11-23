@@ -25,10 +25,10 @@ validNIF = 'TRWAGMYFPDXBNJZSQVHLCKE'
 
 nif = input("Introduza un NIF válido: ")
 nif = nif.upper()
-while not nif[0:len(nif -1)].isnumeric():
+if not nif[0:-1].isnumeric():
     nif = input("Has introducido mal el NIF. Por favor introduce de nuevo el NIF:  ")
 
-dni = int(nif[0:len(nif -1)])
+dni = int(nif[0:-1])
 
 posLetra = dni % 23
 if validNIF[posLetra] == nif[-1]:
