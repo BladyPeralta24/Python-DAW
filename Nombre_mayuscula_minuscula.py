@@ -16,10 +16,21 @@
 continuar = False
 while not continuar:
     nombre_completo = input("Introduce tu nombre completo: ")
-    nombre_mayuscula = nombre_completo.upper()
-    nombre_minuscula = nombre_completo.lower()
+    
+    nombre_mayuscula = nombre_completo.upper().strip()
+    nombre_minuscula = nombre_completo.lower().strip()
+    nombre_completo = nombre_completo.lower().strip()
+    
     print(nombre_mayuscula)
     print(nombre_minuscula)
+    
+    posEspacio = 0
+    
+    while nombre_completo.find(" ", posEspacio) >= 0:
+        posEspacio = nombre_completo.find(" ", posEspacio + 1)
+        nombre_completo = nombre_completo[0:posEspacio+1] + nombre_completo[posEspacio + 1].upper() + nombre_completo[posEspacio+2:]
+        
+    print(nombre_completo)
     salir = input("¿Deseas continuar? (S/N): ")
     if  salir == "n" or  salir == "N":
         continuar = True
@@ -28,3 +39,14 @@ while not continuar:
 
 print("Fin del programa")
 
+#nombre = input("Inserte un nombre y apellidos: ")
+#nombre = nombre.lower().strip()
+#posEspacio = 0
+#
+#while nombre.find(" ", posEspacio) >= 0:
+#    
+#    posEspacio = nombre.find(" ", posEspacio + 1)
+#
+#    nombre = nombre[0:posEspacio+1] + nombre[posEspacio + 1].upper() + nombre[posEspacio+2:]
+#    
+#print(nombre)
