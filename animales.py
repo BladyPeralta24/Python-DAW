@@ -1,8 +1,11 @@
-animales = ["Perro", "Gato", "Elefante", "Girafa"]
+animales = ["Perro", "Gato", "Elefante", "JSirafa"]
 salir = False
 
 while not salir:
     insert_animal = input("Inserte un animal en la lista: ")
+    if insert_animal[-1] == "s":
+        insert_animal = insert_animal[0:-1]
+        
     insert_animal = insert_animal.title()
     
     if insert_animal in animales:
@@ -23,3 +26,28 @@ animales.remove("Perro")
 animales.remove("Gato")   
 
 print(animales)
+
+##  Solucion del profe  ##
+#animales = ["Perro", "Gato", "Elefante", "Jirafa"]
+#
+#
+#animal = '-'
+#
+#while animal != '':
+#    animal = input("Inserte un animal, o inserta vacío para terminar: \n")
+#    
+#    animal = animal.title()
+#    
+#    if animal != '':
+#        if animal[-1] == 's':
+#            animal = animal[0:-1]
+#               
+#        if animal not in animales:
+#            animales.append(animal)
+#        
+#        
+#animales.remove("Perro")
+#animales.remove("Gato")
+#
+#
+#print(animales)
