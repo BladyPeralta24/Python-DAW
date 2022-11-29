@@ -88,3 +88,40 @@ print (nota_media)
 ##nota_media = int(int(notas[0]) + int(notas[1]) + int(notas[2])) / int(len(notas))
 ##
 ##print ("La nota media del curso es: " + str(nota_media))
+
+
+
+
+
+##  Solucion del profe  ##
+#modulo = '-'
+#
+#listaModulos = []
+#
+#
+#while modulo != "":
+#    
+#    modulo = input("Inserta un módulo o deja vacío para continuar:\n")   
+#    
+#    if modulo != '':
+#        listaModulos.append(modulo)
+#    
+#    
+##notas = 0
+##for modulo in listaModulos:
+##    
+##    notas += float(input("Inserta la nota que has sacado en " + modulo + ":\n"))
+#
+#totalNotas = 0
+#totalModulos=0
+#for modulo in listaModulos:
+#    
+#    nota = float(input("Inserta la nota que has sacado en " + modulo + ":\n"))
+#    
+#    totalNotas = totalNotas + nota
+#    totalModulos += 1
+#    
+#
+#print("La nota media de todos los modulos es igual a " +  str(totalNotas/totalModulos) )
+    
+    
