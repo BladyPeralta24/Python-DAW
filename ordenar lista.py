@@ -3,7 +3,7 @@ insert_numero = 0
 while insert_numero != "":
     insert_numero = input("Inserte un numero entero para la lista. Para parar pulsa Enter: ")
 
-    if insert_numero != "": #and insert_numero.isnumeric():
+    if insert_numero != "" and insert_numero.replace('-', '').isnumeric():
         lista_numeros.append(int(insert_numero))
       
 print(lista_numeros)
