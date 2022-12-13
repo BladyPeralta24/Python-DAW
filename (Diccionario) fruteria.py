@@ -19,8 +19,12 @@ print(fruteria)
 # TODO: Terminar el calculo del precio de la fruta por los kilos que quiere el usuario
 fruta = input("Elige una fruta de la lista: ")
 if fruta in fruteria:
-    kilos = input("¿Cuantos kilos quieres de "+ fruta +" ?: ")
+    kilos = float(input("¿Cuantos kilos quieres de "+ fruta +" ?: "))
     print(kilos)
+    
+resultado = kilos * fruteria[fruta]
+
+print (resultado)
     
     
     
