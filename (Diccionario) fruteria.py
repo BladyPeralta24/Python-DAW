@@ -12,19 +12,23 @@ fruteria = {'Plátano': 1.35,
             'Manzana': 0.80,
             'Pera'   : 0.85,
             'Naranja': 0.70}
-
-print(fruteria)
-# TODO: Terminar la parte de introducir valores de la fruta
-# TODO: TErminar si la fruta está en el diccionario
-# TODO: Terminar el calculo del precio de la fruta por los kilos que quiere el usuario
-fruta = input("Elige una fruta de la lista: ")
-if fruta in fruteria:
-    kilos = float(input("¿Cuantos kilos quieres de "+ fruta +" ?: "))
-    print(kilos)
+while True:
+    print("Los valores en nuestra frutería son: ")
+    print(fruteria)
     
-resultado = kilos * fruteria[fruta]
-
-print (resultado)
+    fruta = input("Elige una fruta de la lista: ")
+    cantidad = float(input("¿Cuantos kilos quieres de "+ fruta +"?: "))
+    if fruta.title() in fruteria:
+        
+        valor = fruteria.get(fruta.title()) * cantidad
+        
+        print(fruta.title(), "en", cantidad, "cantidades es igual a un precio de: ", valor)
+        
+    else:
+        print("Disculpe, la fruta no se encuentra disponible.")
+        
+        
+    print("\n\n")
     
     
     
@@ -39,3 +43,4 @@ print (resultado)
 #
 #for pais, capital in diccionario.items():
 #    print(pais, capital)
+
