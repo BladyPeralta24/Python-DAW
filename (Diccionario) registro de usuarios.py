@@ -267,7 +267,7 @@ print (usuario)
 #     opcion = opcion.upper()
     
     
-# print("El programa ha finalizado")
+# print("El programa ha finalizado") #
 
 
 
