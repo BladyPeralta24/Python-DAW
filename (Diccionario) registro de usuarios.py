@@ -262,6 +262,7 @@ print (usuario)
 #         print(usuarios)
     
     
+
     
 #     opcion = input("Elige la opción adecuada:\n[I] Insertar un nuevo usuario.\n[B] Buscar un elemento en el diccionario.\n[M] Mostrar el diccionario.\n[T] Terminar el programa.\n")
 #     opcion = opcion.upper()
