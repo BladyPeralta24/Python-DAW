@@ -4,3 +4,8 @@ directorio_cliente = """nif;nombre;email;teléfono;descuento
 \n63823376M;Juan José Martínez;juanjo@mail.com;664888233;5.2
 \n98376547F;Carmen Sánchez;carmen@mail.com;667677855;15.7"""
 
+cliente = {}
+datos = {}
+
+buscado = directorio_cliente.find("nombre")
+print(buscado)
