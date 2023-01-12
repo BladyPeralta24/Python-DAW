@@ -6,6 +6,13 @@ directorio_cliente = """nif;nombre;email;teléfono;descuento
 
 cliente = {}
 datos = {}
+datos_insertados = ""
 
-buscado = directorio_cliente.find("nombre")
+buscado = directorio_cliente.find(";")
 print(buscado)
+
+for i in range(len(directorio_cliente)):
+    if buscado:
+        datos_insertados += directorio_cliente[i]
+        
+print (datos_insertados)
