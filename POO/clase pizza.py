@@ -27,6 +27,7 @@ pizza1 = Pizza('mediana')
 
 pizza1.agregar_ingrediente()
 print(pizza1.mostrar_informacion())
+
 pizza1.quitar_ingrediente()
 print(pizza1.mostrar_informacion())
 
