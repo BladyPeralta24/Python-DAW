@@ -17,15 +17,16 @@ class Persona():
         
     @property
     def dni(self):
+        print("Estoy dando permiso")
         return self.__dni
     
     def validarNIF(self, nif):
-        comprobacion = "TRWAGMYFPDXBNJZSQVHLCKE"
-        letra = nif[-1:].upper()
+        letra_nif = nif[-1:].upper()
         dni = int(nif[0:8])
         letra = dni % 23
+        comprobacion = "TRWAGMYFPDXBNJZSQVHLCKE"
         
-        if comprobacion[letra] == letra:
+        if comprobacion[letra] == letra_nif:
             return True
         else:
             return False
@@ -39,8 +40,19 @@ class Persona():
             
     def mostrar(self):
         return f'Nombre: {self.nombre}, edad: {self.__edad}, dni: {self.__dni}'
+    
+    def esMayorDeEdad(self):
+        if self.__edad >= 18:
+            return "Es mayor de edad"
+        else:
+            return "Es menor de edad"    
             
             
 
-persona1 = Persona('Junior', 22, '78819396G')
+
+persona1 = Persona()
+persona1.nombre = 'Bladimir'
+persona1.edad = 24
+persona1.dni = '78848952F'
 print(persona1.mostrar())
+print(persona1.esMayorDeEdad())
