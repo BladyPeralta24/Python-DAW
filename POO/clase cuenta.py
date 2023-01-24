@@ -83,7 +83,7 @@ retirar(cantidad): se retira una cantidad a la cuenta. La cuenta puede estar en 
 
 """
 
-# from includes.persona import Persona
+# from includes.persona import Persona # Aqui el profesor creo una carpeta llamada include en la cual se encuentra alojada los archivos persona y cuenta
 
 # class Cuenta():
     
