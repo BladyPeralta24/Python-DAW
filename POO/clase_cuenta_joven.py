@@ -50,7 +50,7 @@ class cuentaJoven(Cuenta):
     
     
 
-carlos = cuentaJoven(Persona("Carlos", 17, '78848952F'), 100.0, 15)
+carlos = cuentaJoven(Persona("Carlos", 24, '78848952F'), 100.0, 15)
 
 print(carlos.esTitularValido())
 
