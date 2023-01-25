@@ -1,5 +1,5 @@
 class Persona():
-    def __init__(self, nombre = "", edad = "", dni = ""):
+    def __init__(self, nombre = "", edad = 0, dni = ""):
         self.nombre = nombre
         self.__edad = edad
         self.__dni = dni
@@ -42,18 +42,14 @@ class Persona():
         return f'Nombre: {self.nombre}, edad: {self.__edad}, dni: {self.__dni}'
     
     def esMayorDeEdad(self):
-        if self.__edad >= 18:
-            return "Es legal"
-        else:
-            return "No es legal"    
-            
+        return self.__edad >= 18
             
 
 
-persona1 = Persona()
-persona1.nombre = 'Bladimir'
-persona1.edad = 24
-persona1.dni = '78848952F'
+#persona1 = Persona()
+#persona1.nombre = 'Bladimir'
+#persona1.edad = 24
+#persona1.dni = '78848952F'
 #print(persona1.mostrar())
 #print(persona1.esMayorDeEdad())
 

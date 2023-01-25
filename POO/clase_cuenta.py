@@ -20,7 +20,7 @@ class Cuenta():
             
 
     def mostrar(self):
-        return f"Titular: \n{self.titular.mostrar()}\nCantidad: {self.__cantidad}€\n"
+        return f"Titular: \n{self.titular.mostrar()}\nCantidad: {str(self.__cantidad)}€\n"
     
     
     def ingresar(self, cantidad_ingresada):
@@ -40,26 +40,26 @@ class Cuenta():
         return f"Has retirado: {cantidad_retirada}€"
     
     
-titular1 = Cuenta()
+# titular1 = Cuenta()
 
-titular1.cantidad = 500.0
-titular1.titular.nombre = "Bladimir"
-titular1.titular.edad = 24
-titular1.titular.dni = "78848952F"
-print(titular1.mostrar())
-
-
-titular1.ingresar(200)
-print(titular1.mostrar())
-
-titular1.retirar(800)
-print(titular1.mostrar())
+# titular1.cantidad = 500.0
+# titular1.titular.nombre = "Bladimir"
+# titular1.titular.edad = 24
+# titular1.titular.dni = "78848952F"
+# print(titular1.mostrar())
 
 
-titular2 = Cuenta(Persona ("Junior", 23, '78819396Y'), 100.0)
-print(titular2.mostrar())
+# titular1.ingresar(200)
+# print(titular1.mostrar())
 
-print(titular1.titular.mostrar())
+# titular1.retirar(800)
+# print(titular1.mostrar())
+
+
+# titular2 = Cuenta(Persona ("Junior", 23, '78819396Y'), 100.0)
+# print(titular2.mostrar())
+
+# print(titular1.titular.mostrar())
 
 
 
