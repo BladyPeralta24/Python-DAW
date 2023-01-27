@@ -42,10 +42,8 @@ class Persona():
         return f'Nombre: {self.nombre}, edad: {self.__edad}, dni: {self.__dni}'
     
     def esMayorDeEdad(self):
-        if self.__edad >= 18:
-            return "Es legal"
-        else:
-            return "No es legal"    
+        return self.__edad >= 18
+             
             
             
 

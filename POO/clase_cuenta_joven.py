@@ -15,7 +15,7 @@ from persona import Persona
 from clase_cuenta import Cuenta
 
 class cuentaJoven(Cuenta):
-    def __init__(self, titular=..., cantidad: float = 0, bonificacion : float = 0):
+    def __init__(self, titular=..., cantidad: float = 0, bonificacion : int = 0):
         super().__init__(titular, cantidad)
         
         self.__bonificacion = bonificacion
@@ -27,7 +27,7 @@ class cuentaJoven(Cuenta):
     
     @bonificacion.setter
     def bonificacion(self, nuevo_valor):
-        if isinstance(nuevo_valor, float) and nuevo_valor >= 0.0:
+        if isinstance(nuevo_valor, int) and nuevo_valor >= 0 and nuevo_valor <= 100:
             self.__bonificacion = nuevo_valor
         else:
             print("ERROR. El valor de la bonificacion no es valida")
@@ -35,7 +35,7 @@ class cuentaJoven(Cuenta):
     
     def esTitularValido(self):
     
-        return self.titular.edad >= 18 and self.titular.edad <= 25
+        return self.titular.esMayorDeEdad() and self.titular.edad <= 25
     
     
     def mostrar(self):
