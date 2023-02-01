@@ -5,4 +5,4 @@ class Poligono():
         self.lado = lado
     
     def area(self):
-        pass
+        None
