@@ -34,6 +34,9 @@ class Estudiante():
             
         return nota_total / numero_modulos
     
+    @staticmethod
+    def cantidad_companieros():
+        pass
     
     
     
