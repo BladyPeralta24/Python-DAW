@@ -6,6 +6,9 @@ el método "mostrar_calificaciones" debe imprimir todas las calificaciones del e
 y el método "promedio_calificaciones" debe calcular y devolver
 """
 class Estudiante():
+    
+    num_estudiantes = 0
+    
     def __init__(self, nombre, edad, *argumentos_entrada):
         self.asignatura = ""
         self.lista_calificaciones = {}
@@ -15,6 +18,14 @@ class Estudiante():
         for nota in argumentos_entrada:
             self.agregar_calificacion(nota)
             
+    @property
+    def nombre(self):
+        return self.__nombre
+    
+    @nombre.setter
+    def nombre(self, nuevo_valor):
+        self.__nombre = nuevo_valor
+        Estudiante.num_estudiantes += 1
             
     def agregar_calificacion(self, modulo, nota):
 
@@ -36,11 +47,15 @@ class Estudiante():
     
     @staticmethod
     def cantidad_companieros():
-        pass
+        return Estudiante.num_estudiantes
     
     
     
-    
+estudiante1 = Estudiante('Luis', 13)
+estudiante2 = Estudiante('Jose', 24)
+estudiante3 = Estudiante('Manu', 18)
+
+print(Estudiante.cantidad_companieros())
 
 # Ejercicio hecho por el profesor
 """
