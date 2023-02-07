@@ -25,5 +25,5 @@ class Automovil():
     
     
 fiat = Automovil(300000)
-#print(fiat.kilometraje)
+print(fiat.kilometraje)
 print(Automovil.calcular_consumo_de_combustible(fiat.kilometraje))
