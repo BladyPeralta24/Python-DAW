@@ -69,11 +69,14 @@ calificaciones del estudiante y el método "promedio_calificaciones" debe calcul
 
 # class Estudiante():
     
+#     cantidad_companheros = 0
 #     def __init__(self,nombre, edad :int ):
         
 #         self.nombre = nombre
 #         self.edad   = edad
 #         self.calificaciones = {}
+
+#         Estudiante.cantidad_companheros += 1
         
 #     def agregar_calificacion(self,modulo, nota):
 #         self.calificaciones[modulo.title()] = nota
@@ -92,8 +95,13 @@ calificaciones del estudiante y el método "promedio_calificaciones" debe calcul
 #             nota_total += calificaion
             
 #         return nota_total/numero_modulos
+
+#      @staticmethod
+#      def cantidad_companhero():
+#          return Estudiante.cantidad_companheros
             
-            
+#       def __del__(self):
+#           Estudiante.cantidad_companheros -= 1
         
         
 # andres = Estudiante("Andrés", 22)
@@ -108,6 +116,9 @@ calificaciones del estudiante y el método "promedio_calificaciones" debe calcul
 
 # print(andres.promedio_calificaciones())
 
+# print("La cantidad de compañeros de la cual dispongo, es: ", andres.cantidad_companhero())
 
+# del andres
 
+# print("La cantidad de compañeros de la cual dispongo, es: ", andres.cantidad_companhero())
 
