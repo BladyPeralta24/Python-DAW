@@ -13,57 +13,211 @@ editar(id): Edita el mensaje con el id en cuestión.
 
 class Foro():
     
-    CONTENIDO_FORO = []
+    CONTENIDO_FORO = {}
     
-
-class Forero(Foro):
+    id_mensaje = 0
     
-    def __init__(self, id_usuario, nick, id_mensaje):
-        super().__init__()
-
-        self.id_usuario     = id_usuario
-        self.nick           = nick
-        self.id_mensaje     = id_mensaje
-        
-        
+    def __init__(self) -> None:
+        pass
+    
     """ Inserta un mensaje en un foro, especificando previamente el nombre/nick de la persona que ha escrito y el ID del mensaje """
-    def insertar(self, mensaje):
-        if self.id_usuario != '' and self.id_mensaje != '':
-            return Foro.CONTENIDO_FORO.append({'Nick': self.nick, 'ID': self.id_usuario, 'Mensaje': mensaje})
-        else:
-            return 'El usuario no existe. No puedes insertar mensajes.'
+    @staticmethod
+    def insertar(mensaje : dict):
+        
+        Foro.id_mensaje += 1
+        Foro.CONTENIDO_FORO[Foro.id_mensaje] = mensaje
+        return Foro.id_mensaje
     
     
     """ Borra un mensaje del foro relacionado con el id pasado como parámetro. Sólo puede borrar mensajes creados por el usuario """
-    def borrar(self, id_insertado):
-        for mensaje in Foro.CONTENIDO_FORO:
-            if mensaje[id_insertado] == self.id_usuario:
-                Foro.CONTENIDO_FORO.remove(mensaje)
-            else:
-                return ('No se ha encontrado el mensaje con el id especificado')
+    @staticmethod
+    def borrar(id_mensaje, id_forero):
+        
+        if Foro.CONTENIDO_FORO[id_mensaje]['id_forero'] == id_forero:
+            del Foro.CONTENIDO_FORO[id_mensaje]
+            return f'Se ha eliminado el mensaje con id:{id_mensaje} con éxito\n'
+        else:
+            return 'No se ha podido eliminar el mensaje\n'
     
     
-    """ Edita el mensaje con el id en cuestión """
-    def editar(self, id_insertado, nuevo_mensaje):
-        for mensaje in Foro.CONTENIDO_FORO:
-            if mensaje['ID'] == self.id_usuario:
-                mensaje['mensaje'] = nuevo_mensaje
-            else:
-                return 'No se ha encontrado el mensaje con el id especificado'
+    """ Edita el mensaje con el id en cuestión """  
+    @staticmethod
+    def editar(id_mensaje, id_forero, nuevo_mensaje: str):
+        
+        if Foro.CONTENIDO_FORO[id_mensaje]['id_forero'] == id_forero:
+            Foro.CONTENIDO_FORO[id_mensaje]['mensaje'] = nuevo_mensaje
+            return f'Se ha editado el mensaje con id:{id_mensaje} con éxito'
+        else:
+            return 'No ha sido posible editar el mensaje'
+        
+    @staticmethod
+    def mostrar():
+        for id_mensaje, mensaje in Foro.CONTENIDO_FORO.items():
+            salida += f"""
+            {id_mensaje:>4d} + Usuario: {mensaje['Nick']}[{mensaje['Id_forero']}]
+                + Mensaje: {mensaje['Mensaje']}
+            +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"""
+        return salida
+    
+    
+    
+class Forero(Foro):
+    
+    id_forero_ultimo = 0
+    
+    def __init__(self, nick):
+        super().__init__()
+        
+        self.nick           = nick
+        self.id_forero = Forero.id_forero_ultimo
+        Forero.id_forero_ultimo += 1
+        
+        
+    def insertar(self, mensaje):
+        
+        dic_mensaje = {}
+        dic_mensaje['id_forero'] = self.id_forero
+        dic_mensaje['Nick'] = self.nick
+        dic_mensaje['mensaje'] = mensaje
+        
+        Foro.insertar(dic_mensaje)
+    
+    
+    def borrar(self, id_mensaje):
+        
+        return Foro.borrar(id_mensaje, self.id_forero)
+    
+    
+    
+    def editar(self, id_mensaje, nuevo_mensaje):
+        
+        return Foro.editar(id_mensaje, self.id_forero, nuevo_mensaje)
             
             
     
-blady = Forero(1, 'Blady', 1)
-lucas = Forero(2, 'Lucas', 2)
-maria = Forero('' , 'Maria', '')
+blady = Forero('Blady')
+lucas = Forero('Lucas')
+maria = Forero('Maria')
 
-blady.insertar('Este es mi primer mensaje')
+blady.insertar('Blady ha iniciado sesion en el Foro')
+#lucas.insertar('Lucas ha iniciado sesion en el Foro')
+#maria.insertar('maria ha iniciado sesion en el Foro')
+print(Foro.CONTENIDO_FORO)
+print(Foro.mostrar())
 
-lucas.insertar('Lucas ha conseguido insertar un mensaje')
-lucas.editar(2, 'Lucas ha conseguido modificar el mensaje')
-#lucas.borrar(2)
+    
+    
+    
 
-maria.insertar('maria ha iniciado sesion')
 
-for mensaje in Foro.CONTENIDO_FORO:
-    print (mensaje)
+
+
+
+
+# Ejercicio hecho por el profesor
+
+
+# class Foro():
+    
+#     contenido = {}
+    
+#     id_mensaje = 0
+        
+#     def __init__(self) -> None:
+#         pass
+    
+#     @staticmethod
+#     def insertar(mensaje : dict):
+        
+#         Foro.id_mensaje += 1
+        
+#         Foro.contenido[Foro.id_mensaje] = mensaje
+        
+#         return Foro.id_mensaje
+        
+    
+#     @staticmethod
+#     def borrar(id_mensaje, id_forero):
+        
+#         if Foro.contenido[id_mensaje]['id_forero'] == id_forero:
+#             del Foro.contenido[id_mensaje]
+#             return f"Se ha eliminado el mensaje con id:{id_mensaje} con éxito"
+#         else:
+#             return "No ha sido posible eliminar el mensaje"
+        
+ 
+#     @staticmethod
+#     def editar(id_mensaje, mensaje : str, id_forero):
+#         if Foro.contenido[id_mensaje]['id_forero'] == id_forero:
+#             Foro.contenido[id_mensaje]['mensaje'] = mensaje
+#             return f"Se ha editado el mensaje con id:{id_mensaje} con éxito"
+#         else:
+#             return "No ha sido posible editar el mensaje"
+
+#        @staticmethod
+#    def mostrar():
+#        salida = ""
+#        for id_mensaje,mensaje in Foro.contenido.items():
+#            salida += f"""
+#                {id_mensaje:>4d} + Usuario: {mensaje['nick']}[{mensaje['id_forero']}] 
+#                     + Mensaje: {mensaje['mensaje']}
+#                +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"""
+#            
+#        return salida
+
+
+
+# from foro import Foro
+
+# class Forero():
+    
+#     id_forero_ultimo = 0
+    
+#     def __init__(self,nick):
+#         self.nick = nick
+        
+#         self.id_forero = Forero.id_forero_ultimo
+        
+#         Forero.id_forero_ultimo += 1
+        
+        
+#     def insertar(self, mensaje):
+        
+#         dic_mensaje = {}
+#         dic_mensaje['id_forero'] = self.id_forero
+#         dic_mensaje['nick'] = self.nick
+#         dic_mensaje['mensaje'] = mensaje
+        
+        
+#         Foro.insertar(dic_mensaje)
+        
+#     def borrar(self, id_mensaje):
+#         return Foro.borrar(id_mensaje, self.id_forero)
+    
+    
+#     def editar(self, id_mensaje, mensaje):
+        
+#         return Foro.editar(id_mensaje, mensaje, self.id_forero)
+        
+        
+        
+# andres = Forero("Andrés")
+# jaime  = Forero("Jaime")
+
+# andres.insertar("Hola, soy nuevo en el foro")
+# andres.insertar("Soy natural de Órzola")
+# andres.insertar("Me gusta el Ajedrez")
+# jaime.insertar("Hola Andrés, bienvenido al Foro")
+
+# print(jaime.borrar(1))
+# print(jaime.borrar(2))
+
+
+# print(Foro.contenido)
+
+# print("\n\n")
+
+
+# andres.editar(1,"Hola, soy Andrés y soy nuevo en el Foro")
+
+# print(Foro.contenido)
