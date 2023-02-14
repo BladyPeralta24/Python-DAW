@@ -17,7 +17,7 @@ class Vector(object):
     
     def __repr__ (self):
         # <__main__.Vector instance at 0x01DDDDC8>.
-        # Ejemplo para git
+        # Ejemplo para git papapa
         return '<Vector (%f, %f)>' % (self.x, self.y)
     
     
