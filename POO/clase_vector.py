@@ -79,6 +79,6 @@ vector3 = Vector(3,1,0)
 vector4 = Vector(2,1,-1)
 
 
-
+# Imprime los valores de los vectores, Tanto el producto escalar como el producto vectorial
 print(vector1 ** vector2)
 print(vector3 * vector4)
