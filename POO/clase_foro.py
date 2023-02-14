@@ -52,11 +52,13 @@ class Foro():
         
     @staticmethod
     def mostrar():
+        salida = ""
         for id_mensaje, mensaje in Foro.CONTENIDO_FORO.items():
             salida += f"""
-            {id_mensaje:>4d} + Usuario: {mensaje['Nick']}[{mensaje['Id_forero']}]
-                + Mensaje: {mensaje['Mensaje']}
-            +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"""
+                {id_mensaje:>4d} + Usuario: {mensaje['Nick']}[{mensaje['id_forero']}] 
+                     + Mensaje: {mensaje['mensaje']}
+                +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"""
+            
         return salida
     
     
