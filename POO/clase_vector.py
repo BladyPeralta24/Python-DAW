@@ -82,3 +82,73 @@ vector4 = Vector(2,1,-1)
 # Imprime los valores de los vectores, Tanto el producto escalar como el producto vectorial. no se envia lalala
 print(vector1 ** vector2)
 print(vector3 * vector4)
+
+
+
+
+
+
+
+
+# ejercicio hecho por el profe
+# class Vector():
+    
+#     def __init__(self, i, j, k):
+        
+#         self.__i = i
+#         self.__j = j
+#         self.__k = k
+        
+        
+#     @property
+#     def i(self):
+#         return self.__i
+       
+#     @property
+#     def j(self):
+#         return self.__j
+    
+#     @property
+#     def k(self):
+#         return self.__k 
+        
+#     def __pow__(self, vector_2):
+        
+#         return self.__i * vector_2.i + self.__j * vector_2.j + self.__k * vector_2.k
+        
+#     def __str__(self):
+        
+#         i = str(self.__i) + 'i,'
+#         if self.__i == 0:
+#             i = ''
+        
+#         j = str(self.__j) + 'j,'
+#         if self.__j == 0:
+#             j = ''
+            
+#         k = str(self.__k) + 'k'
+#         if self.__k == 0:
+#             k = ''
+        
+#         return "(" + i  + j +  k + ')'
+    
+    
+    
+#     def __mul__(self, vector_2):
+        
+#         i = self.__j* vector_2.k - self.__k* vector_2.j
+#         j = - (self.__i* vector_2.k - self.__k* vector_2.i)
+#         k = (self.__i* vector_2.j - self.__j* vector_2.i)
+        
+        
+#         return Vector(i,j,k)
+    
+# vector_1 = Vector(2,3,4)
+# vector_2 = Vector(1,1,2)
+
+
+# print(vector_1)
+
+
+# print(vector_1 ** vector_2)
+# print(vector_1 * vector_2)
