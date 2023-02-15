@@ -28,10 +28,10 @@ class Fraccion():
     
     
     def __add__(self, other):
-        while self.denominador != 0 and other.denominador != 0:
-            mcd = other.denominador
-            other.denominador = self.denominador % other.denominador
-            self.denominador = mcd
+        
+        mcd = other.denominador
+        other.denominador = self.denominador % other.denominador
+        self.denominador = mcd
         mcm = (self.denominador * other.denominador) / mcd
         
         numerador = (self.numerador / mcm) + (other.numerador / mcm)
