@@ -48,22 +48,34 @@ class Fecha():
         mes = str(self.__mes)
         dia = str(self.__dia)
         
-        return (anho + mes + dia) < (other.anho + other.mes + other.dia)
+        return (anho + mes + dia) < (str(other.__anho) + str(other.__mes) + str(other.__dia))
     
     
     def __le__(self, other):
         
-        return self.__dia <= other.dia and self.__mes <= other.mes and self.__anho <= other.anho
+        anho = str(self.__anho)
+        mes = str(self.__mes)
+        dia = str(self.__dia)
+        
+        return (anho + mes + dia) <= (str(other.__anho) + str(other.__mes) + str(other.__dia))
     
     
     def __ge__(self, other):
         
-        return self.__dia >= other.dia and self.__mes >= other.mes and self.__anho >= other.anho
+        anho = str(self.__anho)
+        mes = str(self.__mes)
+        dia = str(self.__dia)
+        
+        return (anho + mes + dia) >= (str(other.__anho) + str(other.__mes) + str(other.__dia))
     
     
     def __gt__(self, other):
         
-        return self.__dia > other.dia and self.__mes > other.mes and self.__anho > other.anho
+        anho = str(self.__anho)
+        mes = str(self.__mes)
+        dia = str(self.__dia)
+        
+        return (anho + mes + dia) > (str(other.__anho) + str(other.__mes) + str(other.__dia))
     
     
     
@@ -77,12 +89,12 @@ class Fecha():
     
     
 fecha1 = Fecha(12, 4, 2023)
-fecha2 = Fecha(5, 5, 2023)
+fecha2 = Fecha(12, 4, 2023)
 
 
 print(fecha1)
-# print(fecha1 > fecha2)
-# print(fecha1 >= fecha2)
-# print(fecha1 <= fecha2)
+print(fecha1 > fecha2)
+print(fecha1 >= fecha2)
+print(fecha1 <= fecha2)
 print(fecha1 < fecha2)
             
