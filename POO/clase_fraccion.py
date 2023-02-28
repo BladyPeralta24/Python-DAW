@@ -1,46 +1,33 @@
 # Escriba una clase "Fraccion" que tenga un numerador y un denominador. 
 # Sobrecargue los operadores "+" , "-", "*" , "/" , "==", "!=" para que puedan sumar, restar, multiplicar, dividir 
 # y comparar dos fracciones y devolver una nueva fracción que represente el resultado.
-
+import math
 
 class Fraccion():
     
     def __init__(self, numerador, denominador):
         
-        self.numerador = numerador
-        self.denominador = denominador
+        mcd = math.gcd(numerador, denominador)
+        
+        self.numerador = int(numerador / mcd)
+        self.denominador = int(denominador / mcd)
         
     
-    
-    '''
-    def maximo_comun_divisor(self, other):
-        temporal = 0
-        while self.denominador != 0:
-            temporal = other.denominador
-            other.denominador = self.denominador % other.denominador
-            self.denominador = temporal
-        return self.denominador
-    
-    def minimo_comun_multiplo(self, other):
-        return (self.denominador + other.denominador) / self.maximo_comun_divisor(self, other)
-    '''
     
     
     
     def __add__(self, other):
         
-        mcd = other.denominador
-        other.denominador = self.denominador % other.denominador
-        self.denominador = mcd
-        mcm = (self.denominador * other.denominador) / mcd
+        numerador = self.numerador * other.denominador + other.numerador * self.denominador
+        denominador = self.denominador * other.denominador
         
-        numerador = (self.numerador / mcm) + (other.numerador / mcm)
-        denominador = mcm
-        
-        return(numerador, denominador)
+        return Fraccion(numerador, denominador)
     
     def __sub__(self, other):
-        pass
+        numerador = self.numerador * other.denominador - self.denominador * other.numerador
+        denominador = self.denominador * other.denominador
+        
+        return Fraccion(numerador, denominador)
     
     def __mul__(self, other):
         
@@ -53,21 +40,32 @@ class Fraccion():
         denominador = self.denominador * other.numerador 
         return Fraccion(numerador, denominador)
     
+    def __eq__(self, other):
+        
+        return self.numerador == other.numerador and self.denominador == other.denominador
+    
+    def __ne__(self, other):
+        
+        return self.numerador != other.numerador or self.denominador != other.denominador
+        
+    
     
     def __str__(self):
         
-        return f'{self.numerador}/{self.denominador}'
+        return f'{self.numerador}\n-\n{self.denominador}\n'
     
     
     
-fraccion1 = Fraccion(2,3)
-fraccion2 = Fraccion(4,5)
+fraccion1 = Fraccion(12,4)
+fraccion2 = Fraccion(5,4)
 
 
-print(fraccion1)
-print(fraccion2)
+# print(fraccion1)
+# print(fraccion2)
 
-print('La suma de las fracciones es: ', fraccion1 + fraccion2, '\n')
-#print('La resta de las fracciones es: ', fraccion1 - fraccion2, '\n')
-#print('La multplicacion de las fracciones es: ', fraccion1 * fraccion2, '\n')
-#print('La division de las fracciones es: ', fraccion1 / fraccion2, '\n')
+print(fraccion1 + fraccion2)
+print(fraccion1 - fraccion2)
+print(fraccion1 * fraccion2)
+print(fraccion1 / fraccion2)
+print(fraccion1 == fraccion2)
+print(fraccion1 != fraccion2)
