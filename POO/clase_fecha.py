@@ -44,45 +44,45 @@ class Fecha():
             
             
     def __lt__(self, other):
-        anho = str(self.__anho)
-        mes = str(self.__mes)
-        dia = str(self.__dia)
+        anho = str(self.__anho).zfill(2)
+        mes = str(self.__mes).zfill(2)
+        dia = str(self.__dia).zfill(2)
         
-        return (anho + mes + dia) < (str(other.__anho) + str(other.__mes) + str(other.__dia))
+        return (anho + mes + dia) < (str(other.__anho).zfill(2) + str(other.__mes).zfill(2) + str(other.__dia).zfill(2))
     
     
     def __le__(self, other):
         
-        anho = str(self.__anho)
-        mes = str(self.__mes)
-        dia = str(self.__dia)
+        anho = str(self.__anho).zfill(2)
+        mes = str(self.__mes).zfill(2)
+        dia = str(self.__dia).zfill(2)
         
-        return (anho + mes + dia) <= (str(other.__anho) + str(other.__mes) + str(other.__dia))
+        return (anho + mes + dia) <= (str(other.__anho).zfill(2) + str(other.__mes).zfill(2) + str(other.__dia).zfill(2))
     
     
     def __ge__(self, other):
         
-        anho = str(self.__anho)
-        mes = str(self.__mes)
-        dia = str(self.__dia)
+        anho = str(self.__anho).zfill(2)
+        mes = str(self.__mes).zfill(2)
+        dia = str(self.__dia).zfill(2)
         
-        return (anho + mes + dia) >= (str(other.__anho) + str(other.__mes) + str(other.__dia))
+        return (anho + mes + dia) >= (str(other.__anho).zfill(2) + str(other.__mes).zfill(2) + str(other.__dia).zfill(2))
     
     
     def __gt__(self, other):
         
-        anho = str(self.__anho)
-        mes = str(self.__mes)
-        dia = str(self.__dia)
+        anho = str(self.__anho).zfill(2)
+        mes = str(self.__mes).zfill(2)
+        dia = str(self.__dia).zfill(2)
         
-        return (anho + mes + dia) > (str(other.__anho) + str(other.__mes) + str(other.__dia))
+        return (anho + mes + dia) > (str(other.__anho).zfill(2) + str(other.__mes).zfill(2) + str(other.__dia).zfill(2))
     
     
     
     def __str__(self):
-        anho = str(self.__anho)
-        mes = str(self.__mes)
-        dia = str(self.__dia)
+        anho = str(self.__anho).zfill(2)
+        mes = str(self.__mes).zfill(2)
+        dia = str(self.__dia).zfill(2)
         return f'{anho + mes + dia}'
     
     
@@ -97,4 +97,52 @@ print(fecha1 > fecha2)
 print(fecha1 >= fecha2)
 print(fecha1 <= fecha2)
 print(fecha1 < fecha2)
-            
+
+
+
+
+
+
+
+# Tarea hecha por el profe
+# class Fecha():
+    
+#     def __init__(self, anho : int, mes : int, dia : int):
+        
+#         self.anho = anho
+#         self.mes  = mes
+#         self.dia  = dia
+        
+#         """
+#         print("2".zfill(2))
+#         print(f'{2:02}')
+#         """
+        
+#         #AAAAMMDD
+#         self.fecha_numero = int(str(self.anho) + str(self.mes).zfill(2) + str(self.dia).zfill(2))
+
+        
+        
+#     def __lt__(self, other): # <
+#         return self.fecha_numero < other.fecha_numero
+    
+#     def __le__(self, other): # <=
+#         return self.fecha_numero <= other.fecha_numero
+    
+#     def __gt__(self, other): # >
+#         return self.fecha_numero > other.fecha_numero
+    
+#     def __ge__(self, other): # >=
+#         return self.fecha_numero >= other.fecha_numero
+    
+# fecha1 = Fecha(2023,2,10)
+# fecha2 = Fecha(2024,2,10)
+
+
+
+        
+# if fecha1 <= fecha2:
+#     print("fecha1 es menor que fecha2")
+        
+        
+        
