@@ -60,7 +60,7 @@ fraccion1 = Fraccion(12,4)
 fraccion2 = Fraccion(5,4)
 
 
-# print(fraccion1)
+print(fraccion1)
 # print(fraccion2)
 
 print(fraccion1 + fraccion2)
