@@ -1,6 +1,6 @@
 class Persona():
     
-    def __init__(self, nombre, primer_apellido, segundo_apellido, edad, nif):
+    def __init__(self, nombre, primer_apellido, segundo_apellido, edad: int, nif):
         
         self.nombre = nombre
         self.primer_apellido = primer_apellido
@@ -20,6 +20,7 @@ class Persona():
             self.__nombre = nuevo_valor
         else:
             print("ERROR. El valor del nombre no es válido")
+            exit
             
     @property
     def primer_apellido(self):
@@ -31,6 +32,7 @@ class Persona():
             self.__primer_apellido = nuevo_valor
         else:
             print("ERROR. El valor del primer apellido no es válido")
+            exit
             
             
     @property
@@ -43,6 +45,7 @@ class Persona():
             self.__segundo_apellido = nuevo_valor
         else:
             print("ERROR. El valor del segundo apellido no es válido")
+            exit
             
     @property
     def edad(self):
@@ -50,10 +53,11 @@ class Persona():
     
     @edad.setter
     def edad(self, nuevo_valor):
-        if isinstance(nuevo_valor, int) and (nuevo_valor > 18 and nuevo_valor < 100):
-            self.__nombre = nuevo_valor
+        if isinstance(nuevo_valor, int) and nuevo_valor >= 0 and nuevo_valor <= 150:
+            self.__edad = nuevo_valor
         else:
-            print("ERROR. El valor de la edad no es válido")
+            print("ERROR. El valor de la edad no es válido\n")
+            exit
             
             
     @property
@@ -77,10 +81,22 @@ class Persona():
             self.__nif = nuevo_valor
         else:
             print("El formato del dni no es válido")
+            exit
             
             
             
-prueba = Persona('Manuel', 'Vargas', 'Sosa', 24, '78848952F')
+            
+            
+    def __str__(self):
+        return f'Nombre: {self.__nombre}\nPrimer Apellido: {self.__primer_apellido}\nSegundo apellido: {self.__segundo_apellido}\nEdad: {self.__edad}\nNIF: {self.__nif}'
+            
+            
+            
+# prueba = Persona('Manuel', 'Vargas', 'Sosa', 24, '78848952F')
+# 
+# print(prueba)
+
+
 
 
 

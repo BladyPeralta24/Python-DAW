@@ -22,6 +22,7 @@ class Contacto(Persona):
             self.__direccion = nuevo_valor
         else:
             print ("ERROR. El valor de la direccion no es válida\n\n")
+            exit
             
             
     @property
@@ -34,6 +35,7 @@ class Contacto(Persona):
             self.__telefono_fijo = nuevo_valor
         else:
             print ("ERROR. El valor del telefono fijo no es válida\n\n")
+            exit
             
     
     @property
@@ -46,6 +48,7 @@ class Contacto(Persona):
             self.__telefono_movil = nuevo_valor
         else:
             print ("ERROR. El valor del telefono móvil no es válida\n\n")
+            exit
             
     @property
     def email(self):
@@ -64,9 +67,19 @@ class Contacto(Persona):
             self.__email = nuevo_valor
         else:
             print("ERROR. El valor del e-mail no es válido")
+            exit
+            
+            
+            
+            
+            
+            
+    def __str__(self):
+        return f'{super().__str__()}\nDireccion: {self.__direccion}\nTelefono fijo: {self.__telefono_fijo}\nTelefono movil: {self.__telefono_movil}\nEmail: {self.__email}'
             
             
     
 # prueba = Contacto("Manule", "Vargas", "Sosa", 24, "78848952F", "Calle los marmoles, 25", "828782258", "636253080", "manuelvargas@gmail.com")
-# print(prueba.email)
+
+# print (prueba)
 
