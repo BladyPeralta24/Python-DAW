@@ -30,7 +30,10 @@ class Agenda():
         
     def lista_contacto(self):
         """ Contactos ordenados por su nombre alfabéticamente """
-        print(self.agenda.sort())
+        lista_ordenada = sorted(self.agenda.items())
+        
+        for nombre, contacto in lista_ordenada:
+            print(contacto.nombre, contacto)
     
     def buscar_contacto(self):
         """ Buscar contactos por cualquiera de sus parámetros """
