@@ -1,125 +1,178 @@
-class Animal():
-    def __init__(self, nombre, especie, edad):
-        self.nombre = nombre
-        self.especie = especie
-        self.edad = edad
-        
-    @property
-    def nombre(self):
-        return self.__nombre
-    @nombre.setter
-    def nombre(self, nuevo_valor):
-        if isinstance(nuevo_valor, str):
-            self.__nombre = nuevo_valor
-        else:
-            print("ERROR. El valor del nombre no es valido")
-            
-    @property
-    def especie(self):
-        return self.__especie
-    @especie.setter
-    def especie(self, nuevo_valor):
-        if isinstance(nuevo_valor, str):
-            self.__especie = nuevo_valor
-        else:
-            print("ERROR. El valor de la especie no es valido")
-            
-    @property
-    def edad(self):
-        return self.__edad
-    @edad.setter
-    def edad(self, nuevo_valor):
-        if isinstance(nuevo_valor, int):
-            self.__edad = nuevo_valor
-        else:
-            print("ERROR. El valor de la edad no es valido")
-            
-    def comunicarse(self):
-        if self.__edad > 1:
-            return f'El/La {self.__nombre} se está comunicando'
-        else:
-            return f'El/La {self.__nombre} es un recien nacido'
-        
-        
-    def mostrar(self):
-        return f'Nombre: {self.__nombre}\nEspecie: {self.__especie}\nEdad: {str(self.__edad)}'
-        
-        
+from abc import ABC, abstractmethod
+import os
+class Animal(ABC):
     
+    @abstractmethod
+    def hacer_sonido(self):
+        pass
     
-class Ave(Animal):
-    def __init__(self, nombre, especie, edad, alas):
-        super().__init__(nombre, especie, edad)
-        self.alas = alas
-        
-    @property
-    def alas(self):
-        return self.__alas
-    @alas.setter
-    def alas(self, nuevo_valor):
-        if isinstance(nuevo_valor, int):
-            self.__alas = nuevo_valor
-        else:
-            print("ERROR. El valor de las alas no es valido\n")
-            
-    def volar(self):
-        if self.__alas == 2:
-            return f'El/La {self.nombre} esta volando'
-        else:
-            return f'El/La {self.nombre} no está volando. Es un recien nacido'
-    def mostrar(self):
-        return super().mostrar()+'\nAlas: '+ str(self.__alas)
-    
-    
-class Pajaro(Ave):
-    
-    def __init__(self, nombre, especie, edad, alas, pico):
-        super().__init__(nombre, especie, edad, alas)
-        self.pico = pico
-        
-    @property
-    def pico(self):
-        return self.__pico
-    @pico.setter
-    def pico(self, nuevo_valor):
-        if isinstance(nuevo_valor, bool):
-            self.__pico = nuevo_valor
-        else:
-            print("ERROR. El valor del pico no es valido")
-            
-    def picotear(self):
-        if self.__pico == True:
-            return f'El/La {self.nombre} está picoteando'
-        else:
-            return f'El/La {self.nombre} pajaro no está picoteando'
-        
-    def mostrar(self):
-        return super().mostrar() +'\nPico: '+ str(self.__pico)+'\n'
+    @abstractmethod
+    def moverse(self):
+        pass
     
 
+class Perro(Animal):
+    
+    def __init__(self, pata):
+        super().__init__()
+        
+        self.pata = pata
+    
+    def hacer_sonido(self):
+        return f"""
+    / \__
+  (    @\___
+  /         O
+ /   (_____/    Guau!
+/_____/   U  
+"""
+    
+    def moverse(self):
+        if self.pata:
+            return f"""
+      .-.   .-.
+     /   \ /   \ 
+ .-. |    |    | .-.
+/   \ \  / \  / /   \s
+|   |  '`.-.`'  |   |
+ \_.' .-`   `-. '._/
+   .-'         '-.
+  /               \s
+  |               |
+   \             /
+    '.___...___.'
+"""
+        else:
+            return f"""
+                                      .-.   .-.
+                                     /   \ /   \ 
+                                 .-. |    |    | .-.
+                                /   \ \  / \  / /   \s
+                                |   |  '`.-.`'  |   |
+                                 \_.' .-`   `-. '._/
+                                   .-'         '-.
+                                  /               \s
+                                  |               |
+                                   \             /
+                                    '.___...___.'
+                                    
+"""
+
+class Gato(Animal):
+    
+    def __init__(self, pata):
+        super().__init__()
+        self.pata = pata
+    
+    def hacer_sonido(self):
+        return f"""
+ .       .
+ |\_---_/|
+/   o_o   \s
+|    U    |
+\  ._I_.  /     Miauh!
+ `-_____-'   
+"""
+
+    def moverse(self):
+        if self.pata:
+            return f"""
+                                      .-.   .-.
+                                     /   \ /   \ 
+                                 .-. |    |    | .-.
+                                /   \ \  / \  / /   \s
+                                |   |  '`.-.`'  |   |
+                                 \_.' .-`   `-. '._/
+                                   .-'         '-.
+                                  /               \s
+                                  |               |
+                                   \             /
+                                    '.___...___.'
+"""
+        else:
+            return f"""
+                                                                          .-.   .-.
+                                                                         /   \ /   \ 
+                                                                     .-. |    |    | .-.
+                                                                    /   \ \  / \  / /   \s
+                                                                    |   |  '`.-.`'  |   |
+                                                                     \_.' .-`   `-. '._/
+                                                                       .-'         '-.
+                                                                      /               \s
+                                                                      |               |
+                                                                       \             /
+                                                                        '.___...___.'
+                                    
+"""
 
 
 
 
 
 
-golondrina = Pajaro('Golondrina', 'Hirundo', 2, 2, True)
+perro = Perro(False)
 
-print(golondrina.mostrar())
-print(golondrina.comunicarse())
-print(golondrina.volar())
-print(golondrina.picotear()+'\n')
+print(perro.hacer_sonido())
 
-ruisenior = Pajaro('Ruiseñor', 'Luscinia', 3, 1, False)
+i = 0
+j = 0
+while (j < 1200):
+    if i == 0:
+        i = 1
+        perro.pata = False
+        os.system('clear')
+        print(perro.moverse())
+    else:
+        i = 0
+        perro.pata = True
+        os.system('clear')
+        print(perro.moverse())
+        
+    j += 1
 
-print(ruisenior.mostrar())
-print(ruisenior.comunicarse())
-print(ruisenior.volar())
-print(ruisenior.picotear()+'\n')
 
-canario = Pajaro('Canario', 'Serinus canaria', 0, 0, False)
+gato = Gato(False)
+print(gato.hacer_sonido())
 
-print(canario.mostrar())
-print(canario.comunicarse())
-print(canario.volar())
-print(canario.picotear()+'\n')
+while (j < 1200):
+    if i == 0:
+        i = 1
+        gato.pata = False
+        os.system('clear')
+        print(gato.moverse())
+    else:
+        i = 0
+        gato.pata = True
+        os.system('clear')
+        print(gato.moverse())
+        
+    j += 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+""" i = 0
+j = 0
+while( j < 1020):
+  
+    if i == 0:
+        i = 1
+        os.system('clear')
+        print("···········\n···········\n···········\n···········\n···········\n···········\n···········\n···········\n")
+    else:
+        i = 0
+        os.system('clear')
+        print("XXXXXXXXXXX\nXXXXXXXXXXX\nXXXXXXXXXXX\nXXXXXXXXXXX\nXXXXXXXXXXX\nXXXXXXXXXXX\nXXXXXXXXXXX\nXXXXXXXXXXX\nXXXXXXXXXXX\n")
+    j += 1 """
