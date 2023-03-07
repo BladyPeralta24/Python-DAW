@@ -21,7 +21,29 @@ class Coleccion():
     
     
     
+# from abc import ABC, abstractmethod
 
+# class Coleccion(ABC):
+    
+#     @abstractmethod
+#     def estaVacia(self):
+#         pass
+    
+#     @abstractmethod
+#     def extraer(self):
+#         pass
+    
+#     @abstractmethod
+#     def primero(self):
+#         pass
+    
+#     @abstractmethod
+#     def anhadir(self):
+#         pass
+    
+#     @abstractmethod
+#     def ultimo(self):
+#         pass
 
 
 
