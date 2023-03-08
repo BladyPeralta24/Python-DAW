@@ -56,6 +56,22 @@ class Agenda():
             if busqueda in contacto.email:
                 encontrado[nombre] = contacto
                 
+            if busqueda in contacto.segundo_apellido:
+                encontrado[nombre] = contacto
+                
+            if busqueda in contacto.edad:
+                encontrado[nombre] = contacto
+                
+            if busqueda in contacto.direccion:
+                encontrado[nombre] = contacto
+                
+            if busqueda in contacto.telefono_fijo:
+                encontrado[nombre] = contacto
+                
+            if busqueda in contacto.telefono_movil:
+                encontrado[nombre] = contacto
+                
+            
             return encontrado
     
     def editar_contacto(self):
