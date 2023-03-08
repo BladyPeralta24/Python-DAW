@@ -83,7 +83,7 @@ class Agenda():
             print('El contacto, no esta en la agenda.\n')
             contacto_a_editar = input('Introduzca el valor del contacto a editar: ')
             
-        campo_a_editar = input("Introduzca el valor del campo a editar:\n[N] editar nombre\n[A]Editar primer apellido\n[E]Editar Email")
+        campo_a_editar = input("Introduzca el valor del campo a editar:\n[N] editar nombre\n[A]Editar primer apellido\n[E]Editar Email\n[SA] Editar segundo apellido\n[TF] Editar telefono fijo\n[TM] Editar telefono móvil\n[D] Editar direccion\n: ")
         while not(campo_a_editar in ['N', 'A', 'E']):
             print('El campo no se encuentra disponible.')
             campo_a_editar = input("Introduzca el valor del campo a editar:\n[N] editar nombre\n[A]Editar primer apellido\n[E]Editar Email")
@@ -116,4 +116,4 @@ agenda = Agenda()
 
 agenda.anhadir_contacto()
 
-print(agenda.lista_contacto())
+print(agenda.editar_contacto())
