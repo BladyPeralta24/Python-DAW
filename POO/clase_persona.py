@@ -80,7 +80,7 @@ class Persona():
         if self.validarNIF(nuevo_valor):
             self.__nif = nuevo_valor
         else:
-            print("El formato del dni no es válido")
+            print("El formato del dni no es válido\n\n")
             exit
             
             
@@ -93,8 +93,8 @@ class Persona():
             
             
 # prueba = Persona('Manuel', 'Vargas', 'Sosa', 24, '78848952F')
-# 
-# print(prueba)
+
+# print(prueba.nif)
 
 
 
