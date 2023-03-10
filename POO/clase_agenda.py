@@ -45,29 +45,52 @@ class Agenda():
         """ Solicitar todos los datos del contacto y lo añade a tu gestion """
         
         nombre = input("Introduce el nombre del contacto: ")
+        Contacto.nombre = nombre
+        
         primer_apellido = input("Introduce el primer apellido del contacto: ")
+        Contacto.primer_apellido = primer_apellido
+        
         segundo_apellido = input("Introduce el segundo apellido del contacto: ")
+        Contacto.segundo_apellido = segundo_apellido
+        
         edad = int(input('Introduce la edad de la persona: '))
+        Contacto.edad = edad
+        
         nif = input('Introduce el dni de la persona: ')
+        while not validarNIF(nif):
+            nif = input("Introduce un NIF válido")
+        Contacto.nif = nif
+        
         direccion = input('Introduce la direccion del contacto: ')
+        Contacto.direccion = direccion
+        
         telefono_fijo = input('Introduce un telefono fijo para el contacto: ' )
+        Contacto.telefono_fijo = telefono_fijo
+        
         telefono_movil = input('Introduce un telefono movíl para el contacto: ')
+        Contacto.telefono_movil = telefono_movil
+        
         email = input('Introduce en E-mail para el contacto: ')
+        while not validarEmail(email):
+            email = input("Introduce un email válido: ")
+        Contacto.email = email
         
         while nombre in self.agenda:
             print("El contacto, ya existe en la agenda\n")
             nombre = input("Introduce el nombre del contacto: ")
+        
             
         nuevo_contacto = Contacto(nombre, primer_apellido, segundo_apellido, edad, nif, direccion, telefono_fijo, telefono_movil, email)
         
-        self.agenda = {nombre: nuevo_contacto}
+        self.agenda.setdefault(nuevo_contacto.nombre, nuevo_contacto)
         
     def lista_contacto(self):
         """ Contactos ordenados por su nombre alfabéticamente """
+        print("Lista de contactos ordenada alfabeticamente:\n")
         lista_ordenada = sorted(self.agenda.items())
         
-        for nombre, contacto in lista_ordenada:
-            print(contacto.nombre, contacto)
+        for nombre, nuevo_contacto in lista_ordenada:
+            print(nuevo_contacto.nombre, nuevo_contacto)
     
     def buscar_contacto(self):
         """ Buscar contactos por cualquiera de sus parámetros """
@@ -82,7 +105,7 @@ class Agenda():
             if parametro in Contacto.segundo_apellido:
                 print (nombre, Contacto)
             
-            if parametro in Contacto.edad:
+            if parametro in str(Contacto.edad):
                 print (nombre, Contacto)
             
             if parametro in Contacto.direccion:
@@ -106,7 +129,7 @@ class Agenda():
         
         contacto_editar = input("Introduce el nombre del contacto que quieras editar: ")
         if contacto_editar in self.agenda.keys():
-            clave = input("Elije la opcion a editar:\nNombre -\nPrimer apellido -\nSegundo Apellido -\nEdad -\nNIF -\nDireccion -\nTelefono fijo -\nTelefono movil -\nEmail -\n: ")
+            clave = input("Elije la opcion a editar: Nombre - Primer apellido - Segundo Apellido - Edad - NIF - Direccion - Telefono fijo - Telefono movil - Email\n: ")
             if clave.lower() == 'nombre' or clave.lower() == "Primer apellido" or clave.lower() == "Segundo apellido" or clave.lower() == "edad" or clave.lower() == "nif" or clave.lower() == "direccion" or clave.lower() == "telefono fijo" or clave.lower() == "telefono movil" or clave.lower() == "email":
                 
                 nuevo_valor = input("Introduce el valor del campo: ")
@@ -145,7 +168,7 @@ class Agenda():
                         if clave.lower() == "telefono movil":
                             contacto.telefono_movil = nuevo_valor
                             
-                    print ("El contacto se ha actualizado correctamente.\n")
+                print ("El contacto se ha actualizado correctamente.\n")
             else:
                 
                 print('Error. Este campo no existe.\n')
@@ -154,19 +177,36 @@ class Agenda():
     
     
     
-# print(""" -- Menú de Agenda --
-# Elija una de estas opciones:
-# ***********************************
-# * 1. Añadir contacto              *
-# * 2. Lista de contactos           *
-# * 3. Busqueda de contacto         *
-# * 4. Editar contacto              *
-# ***********************************      
-#       
-# """)
-
 agenda = Agenda()
 
-agenda.anhadir_contacto()
 
-agenda.buscar_contacto()
+opcion = ""
+
+while opcion != 5:
+    
+    print("""
++--------- Menú de Agenda --------+
+***********************************
+* 1. Añadir contacto              *
+* 2. Lista de contactos           *
+* 3. Busqueda de contacto         *
+* 4. Editar contacto              *
+* 5. Salir                        *
+***********************************
++---------------------------------+        
+""")
+    opcion = int(input('Elije la opcion que deseas realizar: '))
+    
+    if opcion == 1:
+        agenda.anhadir_contacto()
+    
+    if opcion == 2:
+        print(agenda.lista_contacto())
+        
+    if opcion == 3:
+        print(agenda.buscar_contacto())
+        
+    if opcion == 4:
+        agenda.editar_contacto()
+        
+print("\nFin del Programa. Hasta luego\n")

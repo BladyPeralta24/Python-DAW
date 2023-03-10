@@ -10,76 +10,8 @@ class Contacto(Persona):
         self.telefono_movil = telefono_movil
         self.email = email
         
-        
-    
-    @property
-    def direccion(self):
-        return self.__direccion
-    
-    @direccion.setter
-    def direccion(self, nuevo_valor):
-        if isinstance(nuevo_valor, str):
-            self.__direccion = nuevo_valor
-        else:
-            print ("ERROR. El valor de la direccion no es válida\n\n")
-            exit
-            
-            
-    @property
-    def telefono_fijo(self):
-        return self.__telefono_fijo
-    
-    @telefono_fijo.setter
-    def telefono_fijo(self, nuevo_valor):
-        if isinstance(nuevo_valor, str) and len(nuevo_valor) == 9:
-            self.__telefono_fijo = nuevo_valor
-        else:
-            print ("ERROR. El valor del telefono fijo no es válida\n\n")
-            exit
-            
-    
-    @property
-    def telefono_movil(self):
-        return self.__telefono_movil
-    
-    @telefono_movil.setter
-    def telefono_movil(self, nuevo_valor):
-        if isinstance(nuevo_valor, str) and len(nuevo_valor) == 9:
-            self.__telefono_movil = nuevo_valor
-        else:
-            print ("ERROR. El valor del telefono móvil no es válida\n\n")
-            exit
-            
-    @property
-    def email(self):
-        return self.__email
-    
-    def validarEmail(self, correo):
-        if correo.find("@") > 0:
-            posArroba = correo.find("@")
-            if correo.find(".", posArroba, -1) < (len(correo) -1) and correo.find(".", posArroba, -1) > posArroba and 1 < correo.find(".", posArroba, -1) - posArroba:
-                return True
-    
-    @email.setter
-    def email(self, nuevo_valor):
-        
-        if self.validarEmail(nuevo_valor):
-            self.__email = nuevo_valor
-        else:
-            print("ERROR. El valor del e-mail no es válido")
-            exit
-            
-            
-            
-            
             
             
     def __str__(self):
-        return f'{super().__str__()}\nDireccion: {self.__direccion}\nTelefono fijo: {self.__telefono_fijo}\nTelefono movil: {self.__telefono_movil}\nEmail: {self.__email}'
-            
-            
-    
-# prueba = Contacto("Manule", "Vargas", "Sosa", 24, "78848952F", "Calle los marmoles, 25", "828782258", "636253080", "manuelvargas@gmail.com")
-
-# print (prueba)
+        return f': ( Nombre: {self.nombre}, Primer Apellido: {self.primer_apellido}, Segundo apellido: {self.segundo_apellido}, Edad: {self.edad}, NIF: {self.nif}, Direccion: {self.direccion}, Telefono fijo: {self.telefono_fijo}, Telefono movil: {self.telefono_movil}, Email: {self.email} )\n'
 
