@@ -101,9 +101,13 @@ class Portatil(DispositivoElectronico):
             
     def __str__(self):
         return f'{super().__str__()}\nResolucion: {self.__resolucion}\nTamaño: {self.__tamanho}'
+   
     
-    
-	
+
+ 
+ 
+ 
+ 
 portatil = Portatil('Ordenador','HP',55.4, '4k', 22)
 
 try:
