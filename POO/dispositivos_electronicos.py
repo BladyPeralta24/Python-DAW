@@ -47,7 +47,7 @@ class Telefono(DispositivoElectronico):
         if nuevo_valor[0] in Telefono.prefijo and len(nuevo_valor) == 9 and nuevo_valor.isnumeric():
             self.__numero = nuevo_valor
         else:
-            raise ValueError("ExcepcionNumeroControlada")
+            raise Exception("ExcepcionNumeroControlada")
             
     
     @property
@@ -59,7 +59,7 @@ class Telefono(DispositivoElectronico):
         if nuevo_valor.upper() in Telefonica.operadoras.keys():
             self.__companhia = nuevo_valor
         else:
-            raise ValueError("ExcepcionCompanhiaControlada")
+            raise Exception("ExcepcionCompanhiaControlada")
             
     def __str__(self):
         return f'{super().__str__()}\nNúmero: {self.__numero}\nCompañia: {self.__companhia}'
@@ -85,7 +85,7 @@ class Portatil(DispositivoElectronico):
         if nuevo_valor.upper() in Portatil.resoluciones:
             self.__resolucion = nuevo_valor
         else:
-            raise ValueError("ExcepcionResolucionControlada")
+            raise Exception ("ExcepcionResolucionControlada")
             
             
     @property
@@ -97,7 +97,27 @@ class Portatil(DispositivoElectronico):
         if isinstance(nuevo_valor, int):
             self.__tamanho = nuevo_valor
         else:
-            raise ValueError("ExcepcionTamanoControlada")
+            raise Exception("ExcepcionTamanoControlada")
             
     def __str__(self):
         return f'{super().__str__()}\nResolucion: {self.__resolucion}\nTamaño: {self.__tamanho}'
+    
+    
+	
+portatil = Portatil('Ordenador','HP',55.4, '4k', 22)
+
+try:
+    portatil.precio = 'hola'
+except Exception as error:
+    if error.args[0] == 'precio':
+        print('ExcepcionPrecioControlada')
+        
+
+
+	
+telefono = Telefono()
+try:
+    telefono.companhia = 'hola'
+except Exception as error:
+    if error.args[0] == 'companhia':
+        print('ExcepcionCompaniaControlada')
