@@ -1,46 +1,36 @@
+class DivisionPorCeroError(Exception):
+    pass
+
+class EntradaNoValidaError(Exception):
+    pass
+
+
 class Calculadora():
-    
-    def __init__(self, numero1, numero2):
-        
-        self.numero1 = numero1
-        self.numero2 = numero2
-        
-    @property
-    def numero1(self):
-        return self.__numero1
-    
-    @numero1.setter
-    def numero1(self, nuevo_valor):
-        if isinstance(nuevo_valor, str) and nuevo_valor.isnumeric():
-            self.__numero1 = nuevo_valor
+
+    @staticmethod
+    def sumar(sumando1, sumando2):
+        if not isinstance(sumando1, int) and not isinstance(sumando2, int):
+            raise EntradaNoValidaError("Error a la entrada de datos")
         else:
-            print("AQUI DEBE IR UN RAISE. IMPLEMENTAR MAS TARDE")
-            
-    
-    @property
-    def numero2(self):
-        return self.__numero2
-    
-    @numero2.setter
-    def numero2(self, nuevo_valor):
-        if isinstance(nuevo_valor, str) and nuevo_valor.isnumeric():
-            self.__numero2 = nuevo_valor
-        else:
-            print("AQUI DEBE IR UN RAISE. IMPLEMENTAR MAS TARDE")
-            
-            
-    @staticmethod
-    def sumar(self):
-        return self.__numero1 + self.__numero2
+            return sumando1 + sumando2
     
     @staticmethod
-    def restar(self):
-        return self.__numero1 - self.__numero2
+    def restar(minuendo, sustraendo):
+        return minuendo - sustraendo
     
     @staticmethod
-    def multiplicar(self):
-        return self.__numero1 * self.__numero2
+    def multiplicar(multiplicando, multiplicador):
+        return multiplicando * multiplicador
     
     @staticmethod
-    def dividir(self):
-        return self.__numero1 / self.__numero2
+    def dividir(dividendo, divisor):
+        return dividendo / divisor
+    
+
+
+try:
+    calculo1 = Calculadora()
+
+    print(calculo1.sumar(3,"g"))
+except EntradaNoValidaError as e:
+    print("Error", e)
