@@ -10,7 +10,7 @@ class Calculadora():
     @staticmethod
     def sumar(sumando1, sumando2):
         if not isinstance(sumando1, int) and not isinstance(sumando2, int):
-            raise EntradaNoValidaError("Error a la entrada de datos")
+            raise EntradaNoValidaError("debes de introducir un dato numerico")
         else:
             return sumando1 + sumando2
     
@@ -32,5 +32,6 @@ try:
     calculo1 = Calculadora()
 
     print(calculo1.sumar(3,"g"))
+    
 except EntradaNoValidaError as e:
-    print("Error", e)
+    print("Error al introducir un dato no numerico." + e)
