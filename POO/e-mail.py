@@ -12,7 +12,7 @@ def validar_email (correo):
     if not re.findall('.+[@].+\..[a-z]{1,2}$', correo):
         return emailValido
     else:
-        return True
+        return not emailValido
 
 
 # prueba de correo: bladimir.peralta@iescesarmanrique.es
