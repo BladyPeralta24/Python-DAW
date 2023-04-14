@@ -106,22 +106,11 @@ class Portatil(DispositivoElectronico):
 
  
  
- 
- 
-portatil = Portatil('Ordenador','HP',55.4, '4k', 22)
+ 	
+portatil = Portatil()
 
 try:
-    portatil.precio = 'hola'
+    portatil.tamanho = 'hola'
 except Exception as error:
-    if error.args[0] == 'precio':
-        print('ExcepcionPrecioControlada')
-        
-
-
-	
-telefono = Telefono()
-try:
-    telefono.companhia = 'hola'
-except Exception as error:
-    if error.args[0] == 'companhia':
-        print('ExcepcionCompaniaControlada')
+    if error.args[0] == 'tamanho':
+        print('ExcepcionTamanoControlada')
