@@ -6,10 +6,12 @@ def validarTelefono(telefono):
     
     telefonoValido = False
     
-    if not re.findall("^\+.+[0-9]{0,1}\s(.+[0-9]{0,1})\s.+[0-9]",telefono):
+    if not re.findall("^\+.[0-9]{0,1}\s\(.+[0-9]{0,1}\)\s\d{4}-\d{4}$",telefono):
         return telefonoValido
     else:
         return not telefonoValido
+    
+print(validarTelefono("+52 (55) 1234-5678"))
     
     
     
@@ -22,4 +24,4 @@ def validarTelefono(telefono):
 
 # print(re.findall("\+.+[0-9]{2}\s(.+[0-9]{2})\s.+[0-9]{4}-.+[0-9]{4}","+52 (55) 1234-5678"))
 
-print(re.findall('^\+.[0-9]{0,1}\s\(.+[0-9]{0,1}\)$',"+52 (55)"))
+# print(re.findall('^\+.[0-9]{0,1}\s\(.+[0-9]{0,1}\)\s\d{4}-\d{4}$',"+52 (55) 1234-5678"))
