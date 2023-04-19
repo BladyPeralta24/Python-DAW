@@ -63,7 +63,11 @@ while opcion.upper() != 'S':
     
     
     elif opcion.upper() == 'B':
-        pass
+        
+        parametro = input("Introduce un parámetro para localizar a la persona: ")
+        
+        encontrados = Persona.buscar(parametro)
+        print(encontrados)
         
         
     

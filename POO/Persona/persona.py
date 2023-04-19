@@ -122,6 +122,18 @@ class Persona():
             raise Exception('nif','El NIF es inválido. ')
         
         
+    
+    def buscar(self, parametro):
+        
+        encontrados = []
+        for self.__nif, datos_persona in vars(self):
+            
+            if parametro in vars(self):
+                encontrados.append(datos_persona)
+                
+        return encontrados
+        
+        
         
         
 bladimir = Persona()
@@ -134,5 +146,6 @@ bladimir.direccion = "C/ León y Castillo N182"
 bladimir.nif = "78848952F"
 bladimir.codigo_postal = "35500"
 
+print(bladimir.buscar("Bladimir"))
 
 bladimir.guardar()
