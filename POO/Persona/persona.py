@@ -123,15 +123,15 @@ class Persona():
         
         
     
-    def buscar(self, parametro):
+    # def buscar(self, parametro):
         
-        encontrados = []
-        for self.__nif, datos_persona in vars(self):
+    #     encontrados = []
+    #     for self.__nif, datos_persona in vars(self):
             
-            if parametro in vars(self):
-                encontrados.append(datos_persona)
+    #         if parametro in vars(self):
+    #             encontrados.append(datos_persona)
                 
-        return encontrados
+    #     return encontrados
         
         
         
@@ -146,6 +146,6 @@ bladimir.direccion = "C/ León y Castillo N182"
 bladimir.nif = "78848952F"
 bladimir.codigo_postal = "35500"
 
-print(bladimir.buscar("Bladimir"))
+# print(bladimir.buscar("Bladimir"))
 
 bladimir.guardar()
