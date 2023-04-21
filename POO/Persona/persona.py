@@ -7,7 +7,6 @@ Cada persona creada, deberá guardar un registro en un fichero llamado personas.
 
 from email import Email
 from direccion import Direccion
-from abc import abstractmethod
 
 
 import ast
@@ -62,7 +61,7 @@ class Persona():
         """
 
     
-    @abstractmethod
+    @staticmethod
     def validar_nif(nif):
         ValidarNIF = 'TRWAGMYFPDXBNJZSQVHLCKE'
         nif = nif.upper()
@@ -122,30 +121,39 @@ class Persona():
             raise Exception('nif','El NIF es inválido. ')
         
         
-    
-    # def buscar(self, parametro):
+    @staticmethod
+    def buscar(texto_a_buscar):
+        file = open(Persona.archivo_datos, 'r')
         
-    #     encontrados = []
-    #     for self.__nif, datos_persona in vars(self):
+        encontrados = {}
+        
+        contenido = file.read()
+        
+        datos_persona = ast.literal_eval(contenido)
+        
+        for nif, persona in datos_persona.items():
             
-    #         if parametro in vars(self):
-    #             encontrados.append(datos_persona)
+            if texto_a_buscar in nif:
+                encontrados[nif] = persona
                 
-    #     return encontrados
+            if texto_a_buscar in str(persona.values()):
+                encontrados[nif] = persona
+                
+        return encontrados
         
         
         
         
-bladimir = Persona()
+# bladimir = Persona()
 
-bladimir.nombre = "Bladimir"
-bladimir.apellido1 = "Peralta"
-bladimir.apellido2 = "Herrera"
-bladimir.email = "bperaltaherrera@gmail.com"
-bladimir.direccion = "C/ León y Castillo N182"
-bladimir.nif = "78848952F"
-bladimir.codigo_postal = "35500"
+# bladimir.nombre = "Bladimir"
+# bladimir.apellido1 = "Peralta"
+# bladimir.apellido2 = "Herrera"
+# bladimir.email = "bperaltaherrera@gmail.com"
+# bladimir.direccion = "C/ León y Castillo N182"
+# bladimir.nif = "78848952F"
+# bladimir.codigo_postal = "35500"
 
-# print(bladimir.buscar("Bladimir"))
+# # print(bladimir.buscar("Bladimir"))
 
-bladimir.guardar()
+# bladimir.guardar()
