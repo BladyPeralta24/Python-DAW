@@ -87,17 +87,17 @@ class Viaje():
 
         datos_viaje = {}
         
-        datos_viaje[self.origen + '-' + self.destino] = {
-            'origen' : self.origen
-           ,'destino' : self.destino
-           ,'billetes_comprados' : {}
-           ,'avion' : self.avion.modelo
-           ,'precio' : str(self.precio)
-        }
+        # datos_viaje[self.origen + '-' + self.destino] = {
+        #     'origen' : self.origen
+        #    ,'destino' : self.destino
+        #    ,'billetes_comprados' : {}
+        #    ,'avion' : self.avion.modelo
+        #    ,'precio' : str(self.precio)
+        # }
      
         
         
-        #datos_viaje[self.origen + '-' + self.destino] = vars(self)
+        datos_viaje[self.origen + '-' + self.destino] = vars(self)
         
         #print(datos_viaje)
         

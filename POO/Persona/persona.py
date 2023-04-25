@@ -50,6 +50,8 @@ class Persona():
         
         file.write(json.dumps(datos_persona))
         
+        file.close()
+        
         
         
         
