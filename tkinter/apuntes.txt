@@ -1,0 +1,10 @@
+        
+        
+        # crea un widget frame
+        frame1 = Frame(self.raiz)
+        frame1.pack(side="top")
+        
+        self.bsalir = ttk.Button(frame1, text='Salir', command=self.raiz.destroy)
+        # Coloca el botón 'self.bsalir' a la derecha del
+        # objeto anterior.
+        self.bsalir.pack(side=RIGHT)
