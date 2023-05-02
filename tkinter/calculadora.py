@@ -177,13 +177,76 @@ class Calculadora():
         self.boton_igual.pack(side=LEFT, fill=BOTH, expand=True, padx=5)
         
         
-        self.operacion = ''
-        
+        # self.pantalla.focus_set()
         
         
         self.raiz.mainloop()
         
+        self.operacion = ''
+        self.operando1 = 0
+        self.operando2 = 0
+        
+    # Indicar para saber por cual posicion se esta escribiendo
+    i = 0
+    
+    # tomar una captura del indice, despues de escribir la operacion
+    # para asignar al operando2 el valor desde este indice hasta el final
+    j = 0
+    
+    def escribir_numero(self, numero):
+        if self.pantalla.get() == "ERROR":
+            self.pantalla.delete(0, END)
+            self.pantalla.insert(0, 'ERROR')
+            Calculadora.i = 0
+        else:
+            self.pantalla.insert(Calculadora.i, numero)
+            Calculadora.i += 1
+            
+    
+    def escribir_operacion(self, operacion):
+        self.operando1 = float(self.pantalla.get())
+        self.pantalla.insert(Calculadora.i, operacion)
+        self.operacion = operacion
+        Calculadora.j = Calculadora.i + 1
+        Calculadora.i += 1
+        
+    def deshacer(self):
+        if self.pantalla.get() == 'ERROR':
+            self.borrar()
+        else:
+            self.pantalla.delete(Calculadora.i - 1, END)
+            Calculadora.i -= 1
+            
+    def borrar(self):
+        self.pantalla.delete(0, END)
+        Calculadora.i = 0
+        
+    def resultado(self):
+        
+        contenido = self.pantalla.get()
+        
+        self.operando2 = float(contenido[Calculadora.j:])
 
+        if self.operacion == '+':
+            resultado = self.operando1 + self.operando2
+        
+        elif self.operacion == '-':
+            resultado = self.operando1 - self.operando2
+            
+        elif self.operacion == '*':
+            resultado = self.operando1 * self.operando2
+            
+        elif self.operacion == '/':
+            resultado = self.operando1 / self.operando2
+            
+        else:
+            self.pantalla.delete(0, END)
+            self.pantalla.insert(0, 'ERROR')
+            Calculadora.i = 0
+            
+        self.borrar()
+        self.pantalla.insert(0, resultado)
+        Calculadora.i = len(str(resultado))
 
 
 def main():
