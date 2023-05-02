@@ -9,6 +9,7 @@ class Calculadora():
         self.ventana = ventana
         self.ventana.title('Calculadora')
         self.ventana.resizable(0,0)
+        self.ventana.configure(bg="light blue")
         
         #Agregar una caja de texto para que sea la pantalla de la calculadora
         self.pantalla=Text(ventana, state='disabled', width=40,height=3, background='white', fg='black', font=("Helvetica", 15))
