@@ -7,6 +7,7 @@ class Calculadora():
         
         self.raiz = Tk()
         self.raiz.title("Calculadora")
+        self.raiz.geometry("500x250")
         #self.raiz.resizable(0,0)
         
         
@@ -44,7 +45,7 @@ class Calculadora():
         
         self.boton0             = ttk.Button(frame_fila0, text="0", width=30, command= lambda : self.escribir_numero(0))
         self.boton_dividir      = ttk.Button(frame_fila0, text="/", command= lambda : self.escribir_operacion('/'))
-        self.boton_borrar       = ttk.Button(frame_fila0, text="DEL", command= 'self.borrar', style='borrar.TButton')
+        self.boton_borrar       = ttk.Button(frame_fila0, text="DEL", command= self.borrar, style='borrar.TButton')
         self.boton_igual        = ttk.Button(frame_fila0, text='=', width=20, command= lambda : self.resultado())
         
         
@@ -71,7 +72,6 @@ class Calculadora():
         self.boton_igual.pack(side=LEFT, fill=BOTH, expand=True, padx=5)
         
         
-        # self.pantalla.focus_set()
         
         
         self.raiz.mainloop()
