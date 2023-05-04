@@ -7,18 +7,18 @@ class Calculadora():
         
         self.raiz = Tk()
         self.raiz.title("Calculadora")
-<<<<<<< HEAD
+
         self.raiz.geometry("500x250")
         #self.raiz.resizable(0,0)
-=======
+
         self.raiz.configure(bg = "white")
         
         style = ttk.Style(self.raiz)
-        style.configure("borrar.TButton", foreground="white", background='red')
+        style.configure("borrar.TButton", foreground="black", background='red')
         style.configure("numero.TButton", background="lightblue")
         style.configure("operacion.TButton", background='slateblue1')
         
->>>>>>> 0b4b28e01c9a8b0db75c21799658edb34855b1d3
+
         
         
         frame_pantalla= Frame(self.raiz)
@@ -58,17 +58,17 @@ class Calculadora():
         self.boton9             = ttk.Button(frame_fila789, text="9", style='numero.TButton', command= lambda : self.escribir_numero(9))
         self.boton_sumar        = ttk.Button(frame_fila789, text="+", style='operacion.TButton', command= lambda : self.escribir_operacion('+'))
         
-<<<<<<< HEAD
+
         self.boton0             = ttk.Button(frame_fila0, text="0", width=30, command= lambda : self.escribir_numero(0))
         self.boton_dividir      = ttk.Button(frame_fila0, text="/", command= lambda : self.escribir_operacion('/'))
         self.boton_borrar       = ttk.Button(frame_fila0, text="DEL", command= self.borrar, style='borrar.TButton')
         self.boton_igual        = ttk.Button(frame_fila0, text='=', width=20, command= lambda : self.resultado())
-=======
+
         self.boton0             = ttk.Button(frame_fila0, text="0", width=30, style='numero.TButton', command= lambda : self.escribir_numero(0))
         self.boton_dividir      = ttk.Button(frame_fila0, text="/", style='operacion.TButton', command= lambda : self.escribir_operacion('/'))
         self.boton_borrar       = ttk.Button(frame_fila0, text="DEL", command= self.borrar, style='borrar.TButton')
         self.boton_igual        = ttk.Button(frame_fila0, text='=', width=20, style='operacion.TButton', command= lambda : self.resultado())
->>>>>>> 0b4b28e01c9a8b0db75c21799658edb34855b1d3
+
         
         
         self.pantalla.pack(side=LEFT, fill=BOTH, expand=True, padx=5)
