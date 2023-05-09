@@ -196,16 +196,11 @@ class PyRemoto():
         acerca.geometry("320x200")
         acerca.resizable(width=False, height=False)
         acerca.title("Acerca de")
-        marco1 = ttk.Frame(acerca, padding=(10, 10, 10, 10),
-
-        relief=RAISED)
+        marco1 = ttk.Frame(acerca, padding=(10, 10, 10, 10), relief=RAISED)
 
         marco1.pack(side=TOP, fill=BOTH, expand=True)
-        etiq1 = Label(marco1, image=self.icono5,
-
-        relief='raised')
-        etiq1.pack(side=TOP, padx=10, pady=10,
-        ipadx=10, ipady=10)
+        etiq1 = Label(marco1, image=self.icono5, relief='raised')
+        etiq1.pack(side=TOP, padx=10, pady=10, ipadx=10, ipady=10)
 
         etiq2 = Label(marco1, text="PyRemoto "+__version__, foreground='blue', font=self.fuente)
 
