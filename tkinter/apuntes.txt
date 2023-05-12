@@ -8,3 +8,10 @@
         # Coloca el botón 'self.bsalir' a la derecha del
         # objeto anterior.
         self.bsalir.pack(side=RIGHT)
+
+
+
+        para destruir widgets:
+        def destruir_frames(self):
+                for widget in self.frame.winfo_children():
+                widget.destroy()

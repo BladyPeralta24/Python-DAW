@@ -25,6 +25,10 @@ __license__='GNU GPLv3'
 
 
 class AgenciaDeViajes():
+    
+    ventana = 0
+    posx_y = 0
+    
     '''Clase Agencia de Viajes'''
     # Declarar metodo constructor de la aplicacion
     def __init__(self, img_carpeta, iconos):
@@ -105,7 +109,7 @@ class AgenciaDeViajes():
         
         barramenu.add_command(
              label        = 'Salir'
-            ,command      = self.f_salir
+            ,command      = self.salir
             ,underline    = 0
             ,accelerator  = "Ctrl+s"
             ,image        = icono5
@@ -122,22 +126,71 @@ class AgenciaDeViajes():
         self.raiz.bind("<Control-a>", lambda event: self.alta_billete())
         self.raiz.bind("<Control-l>", lambda event: self.listado_viajes())
         self.raiz.bind("<Control-c>", lambda event: self.carga_externa())
+        self.raiz.bind("<Control-s>", lambda event: self.salir())
         
         self.raiz.mainloop()
         
     def alta_billete(self):
-        pass
+        self.destruir_frames()
+        
+        etiqueta_alta = ttk.Label(self.frame, text='Alta:', justify='left', width=40, padding=[10])
+        etiqueta_alta.pack(side=TOP)
+        
     
     def listado_viajes(self):
-        pass
+        self.destruir_frames()
+        
+        etiqueta_lista = ttk.Label(self.frame, text='Listado de viajes:', justify='left', width=40, padding=[10])
+        etiqueta_lista.pack(side=TOP)
     
     def carga_externa(self):
-        pass
-    
-    def f_salir(self):
-        '''Salir de la aplicacion'''
-        self.raiz.destroy()
+        self.destruir_frames()
         
+        etiqueta_carga = ttk.Label(self.frame, text='Cargar viajes:', justify='left', width=40, padding=[10])
+        etiqueta_carga.pack(side=TOP)
+    
+    # def f_salir(self):
+    #     '''Salir de la aplicacion'''
+    #     self.raiz.destroy()
+        
+    def salir(self):
+        # Implementar una ventana salir para salir para 
+        # preguntar al cliente si esta seguro de salir de
+        # la aplicacion.
+        self.destruir_frames()
+        self.abrir_ventana()
+        
+        etiqueta_salir = ttk.Label(self.frame, text='Si quiere salir, vuelva pulsar el boton salir.', justify='left', width=40, padding=[10])
+        etiqueta_salir.pack(side=TOP)
+        
+    def destruir_frames(self):
+        for widget in self.frame.winfo_children():
+            widget.destroy()
+            
+    def abrir_ventana(self):
+        
+        self.ventana = Toplevel()
+        # AgenciaDeViajes.ventana += 1
+        # AgenciaDeViajes.posx_y += 50
+        
+        # tamypos = '200x100+' + str(AgenciaDeViajes.posx_y) + '+' + str(AgenciaDeViajes.posx_y)
+        self.ventana.geometry()
+        self.ventana.resizable(0,0)
+        self.ventana.title('Salir')
+        
+        etiqueta_salir_ventana = ttk.Label(self.ventana, text='¿Seguro que quieres salir de la aplicación?', justify='left', width=40, padding=[10])
+        etiqueta_salir_ventana.pack(side=TOP)
+        
+        boton_si = ttk.Button(self.ventana, text='si', command=self.raiz.destroy)
+        boton_si.pack(side=LEFT, padx=5, pady=5)
+        
+        boton_no = ttk.Button(self.ventana, text='no', command=self.ventana.destroy)
+        boton_no.pack(side=RIGHT, padx=5, pady=5)
+        
+        self.ventana.transient(master=self.raiz)
+        
+        self.ventana.grab_set()
+        self.raiz.wait_window(self.ventana)
         
         
 # Funciones de la aplicacion
