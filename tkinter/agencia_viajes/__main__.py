@@ -59,12 +59,16 @@ class AgenciaDeViajes():
         (Estos valores se podrian leer de un archivo de 
         configuración)
         """
-        self.CFG_TIPOCONEX = IntVar()
-        self.CFG_TIPOCONEX.set(1) # shh
-        self.CFG_TIPOEMUT = IntVar()
-        self.CFG_TIPOEMUT.set(1) # xterm
-        self.CFG_TIPOEXP = IntVar()
-        self.CFG_TIPOEXP.set(1) # thunar
+        self.nombre = StringVar(value="")
+        self.apellido1 = StringVar(value="")
+        self.apellido2 = StringVar(value="")
+        self.viaje = StringVar(value="")
+        self.origen = StringVar(value="")
+        self.destino = StringVar(value="")
+        self.avion = StringVar(value="")
+        self.filtro = StringVar(value="")
+        
+        self.viajes = self.leer_viajes()
         
         # Barra de Estado
         self.estado = IntVar()
@@ -130,12 +134,53 @@ class AgenciaDeViajes():
         
         self.raiz.mainloop()
         
+    def leer_viajes(self, ruta):
+        f = open(ruta)
+        
+        # text = f.read()
+        
+        # dict_viajes = ast.literal_eval(texto)
+        
     def alta_billete(self):
+        
+        # Introducir datos del Usuario
         self.destruir_frames()
         
-        etiqueta_alta = ttk.Label(self.frame, text='Alta:', justify='left', width=40, padding=[10])
-        etiqueta_alta.pack(side=TOP)
+        opciones = self.viajes.keys()
         
+        etiqueta_alta = ttk.Label(self.frame, text='alta billetes')
+        
+        select_viaje = OptionMenu(self.frame, self.viaje, *opciones)
+        
+        etiqueta_viajes = ttk.Label(self.frame, text='Viajes:', justify='left', width=40, padding=[10])
+        
+        etiqueta_nombre = ttk.Label(self.frame, text='Nombre', justify='left', width=40, padding=[10])
+        
+        nombre = ttk.Entry(self.frame, justify='left', textvariable=self.nombre)
+        
+        etiqueta_apellido1 = ttk.Label (self.frame, text='Primer Apellido', justify='left', width=40, padding=[10])
+        
+        apellido1 = ttk.Entry(self.frame, justify='left', textvariable=self.apellido1)
+        
+        etiqueta_apellido2 = ttk.Label (self.frame, text='Segundo Apellido', justify='left', width=40, padding=[10])
+        
+        apellido2 = ttk.Entry(self.frame, justify='left', textvariable=self.apellido2)
+        
+        
+        
+        etiqueta_alta.pack(side=TOP)
+        select_viaje.pack(side=TOP, fill=BOTH, expand=True, padx=5, pady=5)
+        
+        etiqueta_viajes.pack(side=TOP, fill=BOTH, expand=True, padx=5, pady=5)
+        
+        etiqueta_nombre.pack(side=TOP, fill=BOTH, padx=10, pady=5)
+        nombre.pack(side=TOP, fill=X,padx=10, pady=5)
+        
+        etiqueta_apellido1.pack(side=TOP, fill=BOTH,padx=10, pady=5)
+        apellido1.pack(side=TOP, fill=X, padx=10, pady=5)
+        
+        etiqueta_apellido2.pack(side=TOP, fill=BOTH,padx=10, pady=5 )
+        apellido2.pack(side=TOP, fill=X, padx=10, pady=5)
     
     def listado_viajes(self):
         self.destruir_frames()
