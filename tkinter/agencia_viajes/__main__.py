@@ -134,23 +134,25 @@ class AgenciaDeViajes():
         
         self.raiz.mainloop()
         
-    def leer_viajes(self, ruta):
-        f = open(ruta)
+    def leer_viajes(self):
+        # f = open(ruta)
         
         # text = f.read()
         
         # dict_viajes = ast.literal_eval(texto)
+        
+        pass
         
     def alta_billete(self):
         
         # Introducir datos del Usuario
         self.destruir_frames()
         
-        opciones = self.viajes.keys()
+        # opciones = self.viajes.keys()
         
         etiqueta_alta = ttk.Label(self.frame, text='alta billetes')
         
-        select_viaje = OptionMenu(self.frame, self.viaje, *opciones)
+        select_viaje = OptionMenu(self.frame, self.viaje)
         
         etiqueta_viajes = ttk.Label(self.frame, text='Viajes:', justify='left', width=40, padding=[10])
         
