@@ -1,6 +1,10 @@
 from viaje import Viaje
 from avion import Avion
+from aeropuerto import Aeropuerto
+from billete import Billete
 
+import json
+import ast
 import os
 from tkinter import *
 from tkinter import ttk, font
@@ -31,6 +35,7 @@ class AgenciaDeViajes():
     
     '''Clase Agencia de Viajes'''
     # Declarar metodo constructor de la aplicacion
+    ruta_guardado = os.path.dirname(__file__) + os.sep + 'bbdd' + os.sep + 'viajes.json'
     def __init__(self, img_carpeta, iconos):
         ''' Definir ventana de la aplicacion, menu, submenus, 
         menu contextual, barra de herramientas, barra de estado 
@@ -134,25 +139,42 @@ class AgenciaDeViajes():
         
         self.raiz.mainloop()
         
-    def leer_viajes(self):
-        # f = open(ruta)
+    def leer_viajes(self, ruta = ruta_guardado):
+        f = open(ruta)
+        texto = f.read()
+        dict_viajes = ast.literal_eval(texto)
         
-        # text = f.read()
+        viajes = {}
         
-        # dict_viajes = ast.literal_eval(texto)
+        for key in dict_viajes:
+            viaje = Viaje(Aeropuerto(dict_viajes[key]['origen']), Aeropuerto(dict_viajes[key]['destino']), Avion(dict_viajes[key]['avion']))
+            for nbillete in dict_viajes[key]['billetes_comprados']:
+                billete = dict_viajes[key]['billetes_comprados'][nbillete]
+                
+                carga_billete = Billete()
+                carga_billete.nombre = billete.get('nombre')
+                carga_billete.apellido1 = billete.get('apellido1')
+                carga_billete.apellido2 = billete.get('apellido2')
+                carga_billete.viaje = billete.get('viaje')
+                
+                viaje.billetes_comprados = carga_billete
+            
+            viajes[key] = viaje
         
-        pass
+        print(viajes)
+        
+        return viajes
         
     def alta_billete(self):
         
         # Introducir datos del Usuario
         self.destruir_frames()
         
-        # opciones = self.viajes.keys()
+        opciones = self.viajes.keys()
         
         etiqueta_alta = ttk.Label(self.frame, text='alta billetes')
         
-        select_viaje = OptionMenu(self.frame, self.viaje)
+        select_viaje = OptionMenu(self.frame, self.viaje, *opciones)
         
         etiqueta_viajes = ttk.Label(self.frame, text='Viajes:', justify='left', width=40, padding=[10])
         
