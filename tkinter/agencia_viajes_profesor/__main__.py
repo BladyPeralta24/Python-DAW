@@ -247,28 +247,54 @@ def verificar_iconos(iconos):
         
     return True
     
-def main():
+# def main():
     
-    IMG_DIR = os.path.dirname(__file__) + os.sep + 'imagen' + os.sep
+#     IMG_DIR = os.path.dirname(__file__) + os.sep + 'imagen' + os.sep
 
 
+#     iconos = (
+#         IMG_DIR + 'plane_icon.png'
+#         ,IMG_DIR + 'alta.png'
+#         ,IMG_DIR + 'carga.png'
+#         ,IMG_DIR + 'nuevo_viaje.png'
+#         ,IMG_DIR + 'listado.png'
+#     )
+    
+    
+#     not_error = verificar_iconos(iconos)
+    
+#     if not_error:
+#         print("asdfasfdas")
+#         mi_app = AgenciaDeViaje(iconos)
+        
+        
+#     return 0
+
+# if __name__ == '__main__':
+#     main()
+    
+def main():
+    """ Iniciar aplicacion """
+    app_carpeta = os.getcwd()
+    
+    print("La ruta de la carpeta esta en: ", app_carpeta)
+    
+    img_carpeta = app_carpeta + os.sep + 'tkinter/agencia_viajes_profesor/imagenes' + os.sep
+    
+    # declarar y verificar iconos de la aplicacion:
     iconos = (
-        IMG_DIR + 'plane_icon.png'
-        ,IMG_DIR + 'alta.png'
-        ,IMG_DIR + 'carga.png'
-        ,IMG_DIR + 'nuevo_viaje.png'
-        ,IMG_DIR + 'listado.png'
+         img_carpeta + "icono-app.png"
+        ,img_carpeta + "alta.png"
+        ,img_carpeta + "listado.png"
+        ,img_carpeta + "cargar.png"
+        ,img_carpeta + "salir32x32.png"
     )
     
+    error1 = verificar_iconos(iconos)
     
-    not_error = verificar_iconos(iconos)
-    
-    if not_error:
-        print("asdfasfdas")
-        mi_app = AgenciaDeViaje(iconos)
-        
-        
-    return 0
+    if not error1:
+        mi_app = AgenciaDeViaje(img_carpeta, iconos)
+    return(0)
 
 if __name__ == '__main__':
     main()

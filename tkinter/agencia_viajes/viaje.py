@@ -1,117 +1,82 @@
 
 
+from aeropuerto import Aeropuerto
 from avion import Avion
-
-import ast
-import json
+from billete import Billete
 
 class Viaje():
     
-    archivo_datos = '/home/bladimir/Escritorio/python/POO/ejemplo_agencia_viajes/viajes.json'
-    import ast
-    def __init__(self, origen = '', destino= '', avion = '', precio=0.0) -> None:
+    def __init__(self, origen : Aeropuerto, destino : Aeropuerto, avion = Avion):
         
-        self.origen             = origen
-        self.destino            = destino
+        self.__origen             = origen
+        self.__destino            = destino
         self.__avion            = avion
-        self.__precio           = precio
-        self.billetes_comprados = {}
+        self.__billetes_comprados = []
         
         
+        
+    @property
+    def origen(self):
+        return self.__origen
+    
+    @origen.setter
+    def origen(self, nuevo_valor):
+        if not nuevo_valor:
+            raise Exception ('origen', 'No se ha insertado un origen. ')
+        else:
+            self.__origen = nuevo_valor
+            
+    
+    @property
+    def destino(self):
+        return self.__destino
+    
+    @destino.setter
+    def destino(self, nuevo_valor):
+        if not nuevo_valor:
+            raise Exception ('destino', 'No se ha insertado un destino. ')
         
     @property
     def avion(self):
         return self.__avion
     
-    
     @avion.setter
-    def avion(self, nuevo_avion):
+    def avion(self, nuevo_valor):
+        self.__avion = nuevo_valor
         
-        lanzar_excepcion = False
-        
-        if nuevo_avion.isnumeric(): 
-            
-            nuevo_avion = int(nuevo_avion)
-            
-            if nuevo_avion not in (0,1,2):
-                lanzar_excepcion = True
-            else:
-                
-                nuevo_avion = Avion.tipos_aviones[nuevo_avion]
-                
-                        
-        else:
-            if nuevo_avion not in Avion.tipos.keys():
-                lanzar_excepcion = True
-            
-            
-            
-        if lanzar_excepcion:
-            raise Exception('avion','No se ha insertado ningún avión. ')
-        
-        
-        
-        
-        self.__avion = Avion(nuevo_avion, Avion.tipos[nuevo_avion])
-            
-            
     @property
-    def precio(self):
-        return self.__precio 
-    archivo_datos
-    @precio.setter
-    def precio(self, nuevo_precio):
+    def billetes_comprados(self):
+        return self.billetes_comprados
+    
+    @billetes_comprados.setter
+    def billetes_comprados(self, nuevo_billete: Billete):
         
-        if isinstance(nuevo_precio,(int,float)):
-            self.__precio = nuevo_precio
+        if len(self.__billetes_comprados) >= self.__avion.capacidad:
+            raise Exception('billetes_comprados', 'Se ha superado el limite de billetes posibles. ')
         else:
-            raise Exception('precio','No se ha insertado un precio de billete válido. ')
+            self.__billetes_comprados.append(nuevo_billete)
+            
             
     
         
-    
-    
-    
-    def guardar(self):
+    def diccionario(self):
         
-
-        file = open(Viaje.archivo_datos,'r')
+        diccionario = {}
         
-        contenido = file.read()
+        billetes_comprados = {}
         
-        datos_viaje = ast.literal_eval(contenido)
+        i = 1
+        for billete in self.__billetes_comprados:
+            billetes_comprados[i] = billete.diccionario()
+            i += 1
+            
+        diccionario[self.__origen.sede +'-'+ self.__destino.sede] = {
+             'origen'   : self.__origen.sede
+            ,'destino'  : self.__destino.sede
+            ,'avion'    : self.__avion.modelo
+            ,'billetes_comprados' : billetes_comprados
+        }
         
-        file.close()
-        
-        file = open(Viaje.archivo_datos,'w')
-
-        datos_viaje = {}
-        
-        # datos_viaje[self.origen + '-' + self.destino] = {
-        #     'origen' : self.origen
-        #    ,'destino' : self.destino
-        #    ,'billetes_comprados' : {}
-        #    ,'avion' : self.avion.modelo
-        #    ,'precio' : str(self.precio)
-        # }
-     
-        
-        
-        datos_viaje[self.origen + '-' + self.destino] = vars(self)
-        
-        #print(datos_viaje)
-        
-        
-        file.write(json.dumps(datos_viaje))
-        
-        
-        file.close()
-        
-        
-        """
-        contenido = contenido + datos_viaje
-        
-     
-        """
+        return diccionario
         
         
