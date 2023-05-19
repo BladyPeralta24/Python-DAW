@@ -36,6 +36,7 @@ class AgenciaDeViajes():
     '''Clase Agencia de Viajes'''
     # Declarar metodo constructor de la aplicacion
     ruta_guardado = os.path.dirname(__file__) + os.sep + 'bbdd' + os.sep + 'viajes.json'
+    # ruta_archivo = fd.askopenfilename(initialdir = "/",title = "Seleccione archivo",filetypes = (("archivos json","*.json"),("todos los archivos","*.*")))
     def __init__(self, img_carpeta, iconos):
         ''' Definir ventana de la aplicacion, menu, submenus, 
         menu contextual, barra de herramientas, barra de estado 
