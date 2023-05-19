@@ -60,7 +60,7 @@ class AgenciaDeViaje():
         icono_alta          = PhotoImage(file=self.iconos[1])
         icono_listado       = PhotoImage(file=self.iconos[2])
         icono_carga_externa = PhotoImage(file=self.iconos[3])
-        icono_nuevo_viaje = PhotoImage(file=self.iconos[4])
+        icono_nuevo_viaje   = PhotoImage(file=self.iconos[4])
         
         barramenu.add_command(
             label = 'Alta'
@@ -189,7 +189,9 @@ class AgenciaDeViaje():
             messagebox.showerror("Hay errores en el formulario", texto_errores)
         else:
             self.guardar_fichero()
-    
+            
+            
+            
     def guardar_fichero(self):
         pass
     
@@ -242,6 +244,7 @@ def verificar_iconos(iconos):
     
     for icono in iconos:
         if not os.path.exists(icono):
+            
             return False
         
         
@@ -275,26 +278,28 @@ def verificar_iconos(iconos):
     
 def main():
     """ Iniciar aplicacion """
-    app_carpeta = os.getcwd()
+    # app_carpeta = os.path.dirname(__file__)
     
-    print("La ruta de la carpeta esta en: ", app_carpeta)
+    IMG_DIR = os.path.dirname(__file__) + os.sep + 'imagenes' + os.sep
     
-    img_carpeta = app_carpeta + os.sep + 'tkinter/agencia_viajes_profesor/imagenes' + os.sep
+    # print("La ruta de la carpeta esta en: ", os.path.dirname(__file__))
     
     # declarar y verificar iconos de la aplicacion:
     iconos = (
-         img_carpeta + "icono-app.png"
-        ,img_carpeta + "alta.png"
-        ,img_carpeta + "listado.png"
-        ,img_carpeta + "cargar.png"
-        ,img_carpeta + "salir32x32.png"
+         IMG_DIR + "icono-app.png"
+        ,IMG_DIR + "alta.png"
+        ,IMG_DIR + "listado.png"
+        ,IMG_DIR + "cargar.png"
+        ,IMG_DIR + "salir32x32.png"
     )
     
     error1 = verificar_iconos(iconos)
     
     if not error1:
-        mi_app = AgenciaDeViaje(img_carpeta, iconos)
+        mi_app = AgenciaDeViaje(iconos)
     return(0)
+
+
 
 if __name__ == '__main__':
     main()

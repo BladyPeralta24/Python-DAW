@@ -64,8 +64,7 @@ class AgenciaDeViajes():
         configuración)
         """
         self.nombre = StringVar(value="")
-        self.apellido1 = StringVar(value="")
-        self.apellido2 = StringVar(value="")
+        self.apellidos = StringVar(value="")
         self.viaje = StringVar(value="")
         self.origen = StringVar(value="")
         self.destino = StringVar(value="")
