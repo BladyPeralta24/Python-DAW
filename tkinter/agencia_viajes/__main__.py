@@ -165,20 +165,17 @@ class AgenciaDeViajes():
         print(viajes)
         
         return viajes
-    
-    def opcion_seleccionado(self, opcion):
-        self.viaje.set(opcion)
         
     def alta_billete(self):
         
         # Introducir datos del Usuario
         self.destruir_frames()
         
-        opciones = self.viajes.keys()
+        #opciones = self.viajes.keys()
         
         etiqueta_alta = ttk.Label(self.frame, text='alta billetes')
         
-        select_viaje = OptionMenu(self.frame, self.viaje, *opciones, command=self.opcion_seleccionado)
+        #select_viaje = OptionMenu(self.frame, self.viaje, *opciones)
         
         etiqueta_viajes = ttk.Label(self.frame, text='Viajes:', justify='left', width=40, padding=[10])
         
@@ -197,7 +194,7 @@ class AgenciaDeViajes():
         
         
         etiqueta_alta.pack(side=TOP)
-        select_viaje.pack(side=TOP, fill=BOTH, expand=True, padx=5, pady=5)
+        #select_viaje.pack(side=TOP, fill=BOTH, padx=5, pady=5)
         
         etiqueta_viajes.pack(side=TOP, fill=BOTH, expand=True, padx=5, pady=5)
         
