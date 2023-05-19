@@ -164,6 +164,9 @@ class AgenciaDeViajes():
         print(viajes)
         
         return viajes
+    
+    def opcion_seleccionado(self, opcion):
+        self.viaje.set(opcion)
         
     def alta_billete(self):
         
@@ -174,7 +177,7 @@ class AgenciaDeViajes():
         
         etiqueta_alta = ttk.Label(self.frame, text='alta billetes')
         
-        select_viaje = OptionMenu(self.frame, self.viaje, *opciones)
+        select_viaje = OptionMenu(self.frame, self.viaje, *opciones, command=self.opcion_seleccionado)
         
         etiqueta_viajes = ttk.Label(self.frame, text='Viajes:', justify='left', width=40, padding=[10])
         
