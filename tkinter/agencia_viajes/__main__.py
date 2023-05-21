@@ -157,7 +157,7 @@ class AgenciaDeViajes():
         
         for key in dict_viajes:
             
-            dict_viajes = [key]
+            dict_viajes[key]
             
             viaje = Viaje(Aeropuerto(dict_viajes[key]['origen']),Aeropuerto(dict_viajes[key]['destino']),Avion(dict_viajes[key]['avion']))
             
@@ -226,37 +226,83 @@ class AgenciaDeViajes():
         
         etiqueta_alta = ttk.Label(self.frame, text='alta billetes')
         
-        select_viajes = OptionMenu(self.frame, self.viaje, *opciones)
-        
         etiqueta_viajes = ttk.Label(self.frame, text='Viajes:', justify='left', width=40, padding=[10])
+        
+        select_viajes = OptionMenu(self.frame, self.viaje, *opciones)
         
         etiqueta_nombre = ttk.Label(self.frame, text='Nombre', justify='left', width=40, padding=[10])
         
         nombre = ttk.Entry(self.frame, justify='left', textvariable=self.nombre)
         
-        etiqueta_apellidos = ttk.Label (self.frame, text='Primer Apellido', justify='left', width=40, padding=[10])
+        etiqueta_apellidos = ttk.Label (self.frame, text='Apellidos', justify='left', width=40, padding=[10])
         
-        apellidos = ttk.Entry(self.frame, justify='left', textvariable=self.apellido1)
+        apellidos = ttk.Entry(self.frame, justify='left', textvariable=self.apellidos)
+        
+        guardar = ttk.Button(self.frame, text='Guardar', command=self.guardar_billete)
         
         
         
         etiqueta_alta.pack(side=TOP)
-        select_viajes.pack(side=TOP, fill=BOTH, padx=5, pady=5)
         
         etiqueta_viajes.pack(side=TOP, fill=BOTH, expand=True, padx=5, pady=5)
+        select_viajes.pack(side=TOP, fill=BOTH, padx=5, pady=5)
         
         etiqueta_nombre.pack(side=TOP, fill=BOTH, padx=10, pady=5)
         nombre.pack(side=TOP, fill=X,padx=10, pady=5)
         
         etiqueta_apellidos.pack(side=TOP, fill=BOTH,padx=10, pady=5)
         apellidos.pack(side=TOP, fill=X, padx=10, pady=5)
+        
+        guardar.pack(side=TOP, fill=BOTH, padx=5, pady=5)
 
     
-    def listado_viajes(self):
+    def listado_viajes(self, texto_filtrado = ""):
         self.destruir_frames()
         
         etiqueta_lista = ttk.Label(self.frame, text='Listado de viajes:', justify='left', width=40, padding=[10])
-        etiqueta_lista.pack(side=TOP)
+        etiqueta_lista.pack(side=TOP, fill=BOTH, expand=True, padx=5, pady=5)
+        
+        etiqueta_filtro = ttk.Label(self.frame, text='Filtro:', justify='left', width=40, padding=[10])
+        etiqueta_filtro.pack(side=TOP, fill=BOTH, expand=True, padx=5, pady=5)
+        
+        filtro = ttk.Entry(self.frame, justify='left', textvariable=self.filtro)
+        filtro.pack(side=TOP, fill=BOTH, expand=True, padx=5, pady=5)
+        
+        self.frame_viajes = Frame(self.frame)
+        #self.frame.config(width=400, height=300)
+        self.frame_viajes.pack(side=TOP)
+        
+        self.treeview = ttk.Treeview(self.frame_viajes, columns= ("destino", "avion", "capacidad"))
+        for key_viaje in self.viajes:
+            contenido_viajes = str(self.viajes[key_viaje])
+            viaje = self.viajes[key_viaje]
+            if texto_filtrado == '' or texto_filtrado in contenido_viajes.lower():
+                billetes = {}
+                self.treeview.heading('#0',        text   = "Origen")
+                self.treeview.heading("destino",   text   = "Destino")
+                self.treeview.heading("avion",     text   = "Avion")
+                self.treeview.heading("capacidad", text   = "Capacidad")
+
+                self.treeview.insert(
+                    ""
+                    ,tkinter.END
+                    ,text   = viaje.origen.sede
+                    ,values = (viaje.destino.sede, viaje.avion.modelo, viaje.avion.capacidad)
+                )
+        
+                self.treeview.pack()
+        
+        # self.info_filtrar()
+        
+        
+    def info_filtrar(self):
+        pass
+                
+                
+        
+        
+        
+        
     
     def carga_externa(self):
         self.destruir_frames()
@@ -264,9 +310,6 @@ class AgenciaDeViajes():
         etiqueta_carga = ttk.Label(self.frame, text='Cargar viajes:', justify='left', width=40, padding=[10])
         etiqueta_carga.pack(side=TOP)
     
-    # def f_salir(self):
-    #     '''Salir de la aplicacion'''
-    #     self.raiz.destroy()
         
     def salir(self):
         # Implementar una ventana salir para salir para 
@@ -348,119 +391,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# opciones = """ 
-# Inserte una de las siguientes opciones disponibles:
-
-# [I]nsertar un nuevo viaje.
-# [C]omprar un billete.
-# [S]alir del programa.
-# """
-
-
-# opcion = input(opciones)
-
-
-
-# while opcion != 'S':
-    
-#     if opcion == 'I':
-        
-#         avion_cargado = False
-        
-#         opciones_aviones = "Seleccione, un avión de la lista: " + Avion.representacion()
-#         viaje = Viaje()        
-        
-#         while not avion_cargado:
-        
-#             try:
-
-                
-#                 if not viaje.origen:
-#                     viaje.origen  = input("Inserte el origen del viaje: ")
-                
-#                 if not viaje.destino:
-#                     viaje.destino = input("Inserte el destino del viaje: ")
-                
-#                 if not viaje.avion:              
-#                     viaje.avion = input(opciones_aviones)
-                    
-                    
-#                 if not viaje.precio:
-#                     viaje.precio = float(input("Inserte un precio de billete. "))
-                
-                
-#                 avion_cargado = True
-            
-#             except Exception as err:
-#                 print(err[1], end= "")
-                
-#         viaje.guardar()
-                
-        
-        
-            
-        
-        
-        
-#     elif opcion == 'C':
-#         pass
-    
-#     opcion = input("Desea realizar otra operación:\n" + opciones)

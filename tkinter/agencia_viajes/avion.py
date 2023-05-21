@@ -4,9 +4,11 @@ class Avion():
     
     
     modelos = {
-         'Boeing 747' : 700
-        ,'Boeing 737' : 800
-        ,'Airbus a380' : 900
+          'Airbus 319' : 1
+         ,'Airbus 320' : 250
+         ,'Airbus 321' : 260
+         ,'Boeing 737' : 450
+         ,'Boeing 747' : 460
     }
     
     def __init__(self, modelo):
@@ -26,7 +28,7 @@ class Avion():
     
     @property
     def capacidad(self):
-        return Avion.get(self.__modelo)
+        return Avion.modelos.get(self.__modelo)
         
             
             

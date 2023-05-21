@@ -10,7 +10,7 @@ class Viaje():
         
         self.__origen             = origen
         self.__destino            = destino
-        self.__avion            = avion
+        self.__avion              = avion
         self.__billetes_comprados = []
         
         
