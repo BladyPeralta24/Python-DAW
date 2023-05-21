@@ -246,38 +246,13 @@ def verificar_iconos(iconos):
         if not os.path.exists(icono):
             print("Icono no encontrado: ", icono)
             return 1
+        
         return 0
     
-# def main():
-    
-#     IMG_DIR = os.path.dirname(__file__) + os.sep + 'imagen' + os.sep
 
-
-#     iconos = (
-#         IMG_DIR + 'plane_icon.png'
-#         ,IMG_DIR + 'alta.png'
-#         ,IMG_DIR + 'carga.png'
-#         ,IMG_DIR + 'nuevo_viaje.png'
-#         ,IMG_DIR + 'listado.png'
-#     )
-    
-    
-#     not_error = verificar_iconos(iconos)
-    
-#     if not_error:
-#         print("asdfasfdas")
-#         mi_app = AgenciaDeViaje(iconos)
-        
-        
-#     return 0
-
-# if __name__ == '__main__':
-#     main()
     
 def main():
-    """ Iniciar aplicacion """
-    # app_carpeta = os.path.dirname(__file__)
-    
+
     IMG_DIR = os.path.dirname(__file__) + os.sep + 'imagenes' + os.sep
     
     print("La ruta de la carpeta esta en: ", os.path.dirname(__file__))
