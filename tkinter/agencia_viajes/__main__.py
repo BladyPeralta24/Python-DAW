@@ -156,12 +156,16 @@ class AgenciaDeViajes():
         viajes = {}
         
         for key in dict_viajes:
-            viaje = Viaje(Aeropuerto(dict_viajes[key]['origen']), Aeropuerto(dict_viajes[key]['destino']), Avion(dict_viajes[key]['avion']))
+            
+            dict_viajes = [key]
+            
+            viaje = Viaje(Aeropuerto(dict_viajes[key]['origen']),Aeropuerto(dict_viajes[key]['destino']),Avion(dict_viajes[key]['avion']))
             
             for nbillete in dict_viajes[key]['billetes_comprados']:
                 billete = dict_viajes[key]['billetes_comprados'][nbillete]
                 
                 carga_billete = Billete()
+                
                 carga_billete.nombre    = billete.get('nombre')
                 carga_billete.apellidos = billete.get('apellidos')
                 carga_billete.viaje     = billete.get('viaje')
@@ -315,9 +319,9 @@ def verificar_iconos(iconos):
     for icono in iconos:
         if not os.path.exists(icono):
             print('Icono no encontrado: ', icono)
-            return False
+            return 1
         
-    return True
+    return 0
 
 def main():
     """ Iniciar aplicacion """
