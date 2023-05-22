@@ -8,7 +8,7 @@ import os
 from tkinter import *
 from tkinter import ttk, font, messagebox
 from tkinter import filedialog as fd
-
+import tkinter as tk
 
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
@@ -285,7 +285,7 @@ class AgenciaDeViajes():
 
                 self.treeview.insert(
                     ""
-                    ,tkinter.END
+                    ,tk.END
                     ,text   = viaje.origen.sede
                     ,values = (viaje.destino.sede, viaje.avion.modelo, viaje.avion.capacidad)
                 )
