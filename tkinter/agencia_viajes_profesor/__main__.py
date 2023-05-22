@@ -253,11 +253,11 @@ def main():
 
 
     iconos = (
-        IMG_DIR + 'plane_icon.png'
-        ,IMG_DIR + 'alta.png'
-        ,IMG_DIR + 'carga.png'
-        ,IMG_DIR + 'nuevo_viaje.png'
-        ,IMG_DIR + 'listado.png'
+         IMG_DIR + "icono-app.png"
+        ,IMG_DIR + "alta.png"
+        ,IMG_DIR + "listado.png"
+        ,IMG_DIR + "cargar.png"
+        ,IMG_DIR + "salir32x32.png"
     )
     
     
