@@ -4,7 +4,7 @@ class Aeropuerto():
     listado = ['Lanzarote', 'Gran Canaria', 'Tenerife', 'Madrid', 'Barcelona', 'Fuerteventura', 'El Hierro', 'La Gomera', 'La Palma']
     
     def __init__(self, sede):
-        self.sede = sede
+        self.__sede = sede
         
         
     @property

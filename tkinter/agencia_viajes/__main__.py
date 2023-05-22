@@ -3,11 +3,10 @@ from avion import Avion
 from aeropuerto import Aeropuerto
 from billete import Billete
 
-import json
 import ast
 import os
 from tkinter import *
-from tkinter import ttk, font
+from tkinter import ttk, font, messagebox
 from tkinter import filedialog as fd
 
 
@@ -36,7 +35,6 @@ class AgenciaDeViajes():
     '''Clase Agencia de Viajes'''
     # Declarar metodo constructor de la aplicacion
     ruta_guardado = os.path.dirname(__file__) + os.sep + 'bbdd' + os.sep + 'viajes.json'
-    # ruta_archivo = fd.askopenfilename(initialdir = "/",title = "Seleccione archivo",filetypes = (("archivos json","*.json"),("todos los archivos","*.*")))
     def __init__(self, img_carpeta, iconos):
         ''' Definir ventana de la aplicacion, menu, submenus, 
         menu contextual, barra de herramientas, barra de estado 
@@ -66,8 +64,7 @@ class AgenciaDeViajes():
         configuración)
         """
         self.nombre = StringVar(value="")
-        self.apellido1 = StringVar(value="")
-        self.apellido2 = StringVar(value="")
+        self.apellidos = StringVar(value="")
         self.viaje = StringVar(value="")
         self.origen = StringVar(value="")
         self.destino = StringVar(value="")
@@ -129,6 +126,8 @@ class AgenciaDeViajes():
         # Creamos el frame donde vamos a colocar el Alta y el listado de viajes
         self.frame = Frame(self.raiz)
         
+        self.frame.config(bg='lightblue')
+        
         self.frame.config(width=400, height=300)
         self.frame.pack(side=TOP)
         
@@ -140,23 +139,36 @@ class AgenciaDeViajes():
         
         self.raiz.mainloop()
         
+    def destruir_frames(self):
+        for widget in self.frame.winfo_children():
+            widget.destroy()
+        
+        
+        
+        
     def leer_viajes(self, ruta = ruta_guardado):
-        f = open(ruta)
+        f = open(ruta, 'r')
+        
         texto = f.read()
+        
         dict_viajes = ast.literal_eval(texto)
         
         viajes = {}
         
         for key in dict_viajes:
-            viaje = Viaje(Aeropuerto(dict_viajes[key]['origen']), Aeropuerto(dict_viajes[key]['destino']), Avion(dict_viajes[key]['avion']))
+            
+            dict_viajes[key]
+            
+            viaje = Viaje(Aeropuerto(dict_viajes[key]['origen']),Aeropuerto(dict_viajes[key]['destino']),Avion(dict_viajes[key]['avion']))
+            
             for nbillete in dict_viajes[key]['billetes_comprados']:
                 billete = dict_viajes[key]['billetes_comprados'][nbillete]
                 
                 carga_billete = Billete()
-                carga_billete.nombre = billete.get('nombre')
-                carga_billete.apellido1 = billete.get('apellido1')
-                carga_billete.apellido2 = billete.get('apellido2')
-                carga_billete.viaje = billete.get('viaje')
+                
+                carga_billete.nombre    = billete.get('nombre')
+                carga_billete.apellidos = billete.get('apellidos')
+                carga_billete.viaje     = billete.get('viaje')
                 
                 viaje.billetes_comprados = carga_billete
             
@@ -165,53 +177,132 @@ class AgenciaDeViajes():
         print(viajes)
         
         return viajes
+    
+    def guardar_billete(self):
+        errores = False
+        
+        texto_errores = ''
+        
+        nuevo_billete = Billete()
+        
+        try:
+            nuevo_billete.viaje = self.viaje.get()
+        except:
+            errores = True
+            texto_errores += ' - No se ha seleccionado ningun viaje\n'
+        else:
+            viaje_seleccionado = self.viajes.get(nuevo_billete.viaje)
+            
+        try:
+            nuevo_billete.nombre = self.nombre.get()
+        except:
+            errores = True
+            texto_errores += ' - No se ha escrito un nombre.\n'
+            
+        try:
+            nuevo_billete.apellidos = self.apellidos.get()
+        except:
+            errores = True
+            texto_errores += ' - No se ha escrito unos apellidos.\n'
+            
+        try:
+            viaje_seleccionado.billetes_comprados = nuevo_billete
+        except Exception as error:
+            texto_errores += error.args[1]
+            
+        if errores:
+            messagebox.showerror('Hay errores en el formulario', texto_errores)
+        else:
+            self.guardar_fichero()
+        
+        
         
     def alta_billete(self):
         
         # Introducir datos del Usuario
         self.destruir_frames()
         
-        #opciones = self.viajes.keys()
+        opciones = self.viajes.keys()
         
         etiqueta_alta = ttk.Label(self.frame, text='alta billetes')
         
-        #select_viaje = OptionMenu(self.frame, self.viaje, *opciones)
-        
         etiqueta_viajes = ttk.Label(self.frame, text='Viajes:', justify='left', width=40, padding=[10])
+        
+        select_viajes = OptionMenu(self.frame, self.viaje, *opciones)
         
         etiqueta_nombre = ttk.Label(self.frame, text='Nombre', justify='left', width=40, padding=[10])
         
         nombre = ttk.Entry(self.frame, justify='left', textvariable=self.nombre)
         
-        etiqueta_apellido1 = ttk.Label (self.frame, text='Primer Apellido', justify='left', width=40, padding=[10])
+        etiqueta_apellidos = ttk.Label (self.frame, text='Apellidos', justify='left', width=40, padding=[10])
         
-        apellido1 = ttk.Entry(self.frame, justify='left', textvariable=self.apellido1)
+        apellidos = ttk.Entry(self.frame, justify='left', textvariable=self.apellidos)
         
-        etiqueta_apellido2 = ttk.Label (self.frame, text='Segundo Apellido', justify='left', width=40, padding=[10])
-        
-        apellido2 = ttk.Entry(self.frame, justify='left', textvariable=self.apellido2)
+        guardar = ttk.Button(self.frame, text='Guardar', command=self.guardar_billete)
         
         
         
         etiqueta_alta.pack(side=TOP)
-        #select_viaje.pack(side=TOP, fill=BOTH, padx=5, pady=5)
         
         etiqueta_viajes.pack(side=TOP, fill=BOTH, expand=True, padx=5, pady=5)
+        select_viajes.pack(side=TOP, fill=BOTH, padx=5, pady=5)
         
         etiqueta_nombre.pack(side=TOP, fill=BOTH, padx=10, pady=5)
         nombre.pack(side=TOP, fill=X,padx=10, pady=5)
         
-        etiqueta_apellido1.pack(side=TOP, fill=BOTH,padx=10, pady=5)
-        apellido1.pack(side=TOP, fill=X, padx=10, pady=5)
+        etiqueta_apellidos.pack(side=TOP, fill=BOTH,padx=10, pady=5)
+        apellidos.pack(side=TOP, fill=X, padx=10, pady=5)
         
-        etiqueta_apellido2.pack(side=TOP, fill=BOTH,padx=10, pady=5 )
-        apellido2.pack(side=TOP, fill=X, padx=10, pady=5)
+        guardar.pack(side=TOP, fill=BOTH, padx=5, pady=5)
+
     
-    def listado_viajes(self):
+    def listado_viajes(self, texto_filtrado = ""):
         self.destruir_frames()
         
         etiqueta_lista = ttk.Label(self.frame, text='Listado de viajes:', justify='left', width=40, padding=[10])
-        etiqueta_lista.pack(side=TOP)
+        etiqueta_lista.pack(side=TOP, fill=BOTH, expand=True, padx=5, pady=5)
+        
+        etiqueta_filtro = ttk.Label(self.frame, text='Filtro:', justify='left', width=40, padding=[10])
+        etiqueta_filtro.pack(side=TOP, fill=BOTH, expand=True, padx=5, pady=5)
+        
+        filtro = ttk.Entry(self.frame, justify='left', textvariable=self.filtro)
+        filtro.pack(side=TOP, fill=BOTH, expand=True, padx=5, pady=5)
+        
+        self.frame_viajes = Frame(self.frame)
+        #self.frame.config(width=400, height=300)
+        self.frame_viajes.pack(side=TOP)
+        
+        self.treeview = ttk.Treeview(self.frame_viajes, columns= ("destino", "avion", "capacidad"))
+        for key_viaje in self.viajes:
+            contenido_viajes = str(self.viajes[key_viaje])
+            viaje = self.viajes[key_viaje]
+            if texto_filtrado == '' or texto_filtrado in contenido_viajes.lower():
+                billetes = {}
+                self.treeview.heading('#0',        text   = "Origen")
+                self.treeview.heading("destino",   text   = "Destino")
+                self.treeview.heading("avion",     text   = "Avion")
+                self.treeview.heading("capacidad", text   = "Capacidad")
+
+                self.treeview.insert(
+                    ""
+                    ,tkinter.END
+                    ,text   = viaje.origen.sede
+                    ,values = (viaje.destino.sede, viaje.avion.modelo, viaje.avion.capacidad)
+                )
+        
+                self.treeview.pack()
+        
+        # self.info_filtrar()
+        
+        
+    def info_filtrar(self):
+        pass
+                
+                
+        
+        
+        
+        
     
     def carga_externa(self):
         self.destruir_frames()
@@ -219,9 +310,6 @@ class AgenciaDeViajes():
         etiqueta_carga = ttk.Label(self.frame, text='Cargar viajes:', justify='left', width=40, padding=[10])
         etiqueta_carga.pack(side=TOP)
     
-    # def f_salir(self):
-    #     '''Salir de la aplicacion'''
-    #     self.raiz.destroy()
         
     def salir(self):
         # Implementar una ventana salir para salir para 
@@ -233,9 +321,7 @@ class AgenciaDeViajes():
         etiqueta_salir = ttk.Label(self.frame, text='Si quiere salir, vuelva pulsar el boton salir.', justify='left', width=40, padding=[10])
         etiqueta_salir.pack(side=TOP)
         
-    def destruir_frames(self):
-        for widget in self.frame.winfo_children():
-            widget.destroy()
+
             
     def abrir_ventana(self):
         
@@ -262,10 +348,13 @@ class AgenciaDeViajes():
         self.ventana.grab_set()
         self.raiz.wait_window(self.ventana)
         
+    def guardar_fichero(self):
+        pass
+        
         
 # Funciones de la aplicacion
 
-def fun_verificar_iconos(iconos):
+def verificar_iconos(iconos):
     """ 
     Verificar existencia de iconos
     iconos -- Lista de iconos
@@ -273,8 +362,9 @@ def fun_verificar_iconos(iconos):
     for icono in iconos:
         if not os.path.exists(icono):
             print('Icono no encontrado: ', icono)
-            return(1)
-        return(0)
+            return 1
+        
+    return 0
 
 def main():
     """ Iniciar aplicacion """
@@ -293,7 +383,7 @@ def main():
         ,img_carpeta + "salir32x32.png"
     )
     
-    error1 = fun_verificar_iconos(iconos)
+    error1 = verificar_iconos(iconos)
     
     if not error1:
         mi_app = AgenciaDeViajes(img_carpeta, iconos)
@@ -301,119 +391,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# opciones = """ 
-# Inserte una de las siguientes opciones disponibles:
-
-# [I]nsertar un nuevo viaje.
-# [C]omprar un billete.
-# [S]alir del programa.
-# """
-
-
-# opcion = input(opciones)
-
-
-
-# while opcion != 'S':
-    
-#     if opcion == 'I':
-        
-#         avion_cargado = False
-        
-#         opciones_aviones = "Seleccione, un avión de la lista: " + Avion.representacion()
-#         viaje = Viaje()        
-        
-#         while not avion_cargado:
-        
-#             try:
-
-                
-#                 if not viaje.origen:
-#                     viaje.origen  = input("Inserte el origen del viaje: ")
-                
-#                 if not viaje.destino:
-#                     viaje.destino = input("Inserte el destino del viaje: ")
-                
-#                 if not viaje.avion:              
-#                     viaje.avion = input(opciones_aviones)
-                    
-                    
-#                 if not viaje.precio:
-#                     viaje.precio = float(input("Inserte un precio de billete. "))
-                
-                
-#                 avion_cargado = True
-            
-#             except Exception as err:
-#                 print(err[1], end= "")
-                
-#         viaje.guardar()
-                
-        
-        
-            
-        
-        
-        
-#     elif opcion == 'C':
-#         pass
-    
-#     opcion = input("Desea realizar otra operación:\n" + opciones)
