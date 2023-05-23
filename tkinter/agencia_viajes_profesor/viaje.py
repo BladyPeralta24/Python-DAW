@@ -51,7 +51,7 @@ class Viaje():
     def billetes_comprados(self, nuevo_billete: Billete):
         
         if len(self.__billetes_comprados) >= self.__avion.capacidad:
-            raise Exception('billetes_comprados', ' Se ha superado el límite de billetes posibles. ')
+            raise Exception('billetes_comprados', "- Se ha superado el límite de billetes posibles.\n")
         else:
             self.__billetes_comprados.append(nuevo_billete)
             
@@ -65,7 +65,8 @@ class Viaje():
         
         
         i = 1
-        for billete in self.__billetes_comprados:
+        for billete in self.__billetes_comprados:          
+           
             billetes_comprados[i] = billete.diccionario()
             i += 1
             
@@ -78,3 +79,6 @@ class Viaje():
         }
 
         return diccionario
+    
+    def __str__(self):
+        return f"Origen: {self.__origen.sede} Destino: {self.__destino.sede} Avion: {self.__avion.modelo} Capacidad: {self.__avion.capacidad}"

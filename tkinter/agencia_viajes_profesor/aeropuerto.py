@@ -5,7 +5,7 @@ class Aeropuerto():
     
     
     def __init__(self, sede):
-        self.__sede = sede
+        self.sede = sede
     
     
     @property

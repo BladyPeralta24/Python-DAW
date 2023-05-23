@@ -10,6 +10,9 @@ from avion import Avion
 from billete import Billete
 from viaje import Viaje
 
+from tkinter import filedialog as fd
+
+import json
 
 class AgenciaDeViaje():
     
@@ -60,7 +63,7 @@ class AgenciaDeViaje():
         icono_alta          = PhotoImage(file=self.iconos[1])
         icono_listado       = PhotoImage(file=self.iconos[2])
         icono_carga_externa = PhotoImage(file=self.iconos[3])
-        icono_nuevo_viaje   = PhotoImage(file=self.iconos[4])
+        icono_nuevo_viaje = PhotoImage(file=self.iconos[4])
         
         barramenu.add_command(
             label = 'Alta'
@@ -116,7 +119,10 @@ class AgenciaDeViaje():
         
         self.raiz.mainloop()
 
-    
+    def destruir_frames_viajes(self):
+        for widget in self.frame_viajes.winfo_children():
+            widget.destroy()
+            
     def destruir_frames(self):
         
         for widget in self.frame.winfo_children():
@@ -181,28 +187,148 @@ class AgenciaDeViaje():
         try:
             viaje_seleccionado.billetes_comprados = nuevo_billete
         except Exception as error:
+            errores = True
             texto_errores += error.args[1]
             
-            
+        
+
+        
         
         if errores:
             messagebox.showerror("Hay errores en el formulario", texto_errores)
         else:
+            self.viajes[nuevo_billete.viaje] = viaje_seleccionado
             self.guardar_fichero()
-            
-            
-            
+            messagebox.showinfo("Agregado", "Se ha guardado el billete con éxito")
+    
     def guardar_fichero(self):
-        pass
+        f = open(self.ruta_guardado,'w')
+        
+        dict_viajes = {}
+        
+        for viaje in self.viajes: 
+            dict_viajes.update(self.viajes[viaje].diccionario())
+        #hace lo mismo    
+        #for key_viaje, viaje in self.viajes.items(): 
+        #    dict_viajes.update(viaje.diccionario())
+            
+        f.write(json.dumps(dict_viajes, indent=4))
+            
     
     def listado_viajes(self):
         self.destruir_frames()
+        
+        etiqueta_filtro    = ttk.Label(self.frame , text="Filtro: "             , justify="left", width=40, padding=[10])
+        etiqueta_listado   = ttk.Label(self.frame , text="Listado de viajes: "  , justify="left", width=40, padding=[10])
+        
+        filtro  = ttk.Entry(self.frame, justify="left", textvariable=self.filtro)
+        filtrar = ttk.Button(self.frame, text="Filtrar", command=self.filtrar)
+        
+        self.frame_viajes = Frame(self.frame)
+        
+        etiqueta_filtro.pack(side=TOP, fill=BOTH, padx=5, pady=5)
+        filtro.pack(side=TOP, fill=BOTH, padx=5, pady=5)
+        filtrar.pack(side=TOP, fill=BOTH, padx=5, pady=5)
+        etiqueta_listado.pack(side=TOP, fill=BOTH, padx=5, pady=5)      
+        self.frame_viajes.pack(side=TOP)
+        
+        
+        self.info_filtrar()
+        
+    def info_filtrar(self, texto_filtrado=""):
+  
+       
+        scrollbar = Scrollbar(self.frame_viajes)
+        scrollbar.pack(side="right",fill="y")
+        
+        self.treeview_viajes = ttk.Treeview(self.frame_viajes,  columns=('destino', 'avion', 'capacidad'), yscrollcommand= scrollbar.set)
+        
+        self.treeview_viajes.heading("#0"       , text="Origen")
+        self.treeview_viajes.heading("destino"  , text="Destino")
+        self.treeview_viajes.heading("avion"    , text="Avión")
+        self.treeview_viajes.heading("capacidad", text="Capacidad")
+        
+        
+        for key_viajes in self.viajes:
+            contenido_viajes = str(self.viajes[key_viajes])
+            
+            if texto_filtrado == '' or texto_filtrado.lower() in contenido_viajes.lower():
+            
+                self.treeview_viajes.insert(
+                        ""
+                    ,END
+                    ,text=self.viajes[key_viajes].origen.sede
+                    ,values=(self.viajes[key_viajes].destino.sede, self.viajes[key_viajes].avion.modelo, self.viajes[key_viajes].avion.capacidad)
+                )
+        
+        scrollbar.config(command=self.treeview_viajes.yview)
+        self.treeview_viajes.pack()
+        
+    
+    def filtrar(self):
+        self.destruir_frames_viajes()
+        
+        self.info_filtrar(self.filtro.get())
     
     def carga_externa(self):
         self.destruir_frames()
+        
+        ruta_datos_externos = fd.askopenfilename(initialdir="/", title="Seleccione archivo de carga externa", filetypes=(("json files","*.json"), ("todos los archivos", "*.*")))
+        
+        viajes_externos = self.leer_viajes(ruta_datos_externos)
+        
+        self.viajes.update(viajes_externos)
+        
+        self.guardar_fichero()
+        
+        #self.viajes
+
+        
     
     def nuevo_viaje(self):
         self.destruir_frames()
+        
+        etiqueta_origen  = ttk.Label(self.frame , text="Origen: " , justify="left", width=40, padding=[10])
+        etiqueta_destino = ttk.Label(self.frame , text="Destino: " , justify="left", width=40, padding=[10])
+        etiqueta_avion   = ttk.Label(self.frame , text="Avión: " , justify="left", width=40, padding=[10])
+        
+        select_origen  = OptionMenu(self.frame, self.origen, *Aeropuerto.listado)
+        select_destino = OptionMenu(self.frame, self.destino, *Aeropuerto.listado)
+        select_avion   = OptionMenu(self.frame, self.avion, *Avion.modelos.keys())
+        
+        guardar = ttk.Button(self.frame, text="Guardar", command=self.guardar_viaje)
+        
+        
+        etiqueta_origen.pack(side=TOP, fill=BOTH, padx=5, pady=5)
+        select_origen.pack(side=TOP, fill=BOTH, padx=5, pady=5)
+        etiqueta_destino.pack(side=TOP, fill=BOTH, padx=5, pady=5)
+        select_destino.pack(side=TOP, fill=BOTH, padx=5, pady=5)
+        etiqueta_avion.pack(side=TOP, fill=BOTH, padx=5, pady=5)
+        select_avion.pack(side=TOP, fill=BOTH, padx=5, pady=5)
+        guardar.pack(side=TOP, fill=BOTH, padx=5, pady=5)
+    
+    
+    def guardar_viaje(self):
+        texto_errores = ''
+        
+        if not self.origen.get():
+            texto_errores += " - No se ha especificado un origen.\n"
+        if not self.destino.get():
+            texto_errores += " - No se ha especificado un destino.\n"
+        if not self.avion.get():
+            texto_errores += " - No se ha especificado un avion.\n"
+        if self.origen.get() and self.origen.get() == self.destino.get():
+            texto_errores += " - Origen, no puede ser igual a destino.\n"
+        if self.viajes.get(self.origen.get() + '-' + self.destino.get()):
+            texto_errores += " - El viaje ya se encuentra en nuestra BBDD.\n"
+            
+        if texto_errores:
+            messagebox.showerror("Hay errores en el formulario", texto_errores)
+        else:
+            viaje = Viaje(Aeropuerto(self.origen.get()),Aeropuerto(self.destino.get()), Avion(self.avion.get()))
+            self.viajes[self.origen.get() + '-' + self.destino.get()] = viaje
+            self.guardar_fichero()
+            messagebox.showinfo("Éxito", "Viaje creado con éxito")
     
     def leer_viajes(self, ruta = ruta_guardado):
         
@@ -244,60 +370,33 @@ def verificar_iconos(iconos):
     
     for icono in iconos:
         if not os.path.exists(icono):
-            print("Icono no encontrado: ", icono)
-            return 1
-        return 0
-    
-# def main():
-    
-#     IMG_DIR = os.path.dirname(__file__) + os.sep + 'imagen' + os.sep
-
-
-#     iconos = (
-#         IMG_DIR + 'plane_icon.png'
-#         ,IMG_DIR + 'alta.png'
-#         ,IMG_DIR + 'carga.png'
-#         ,IMG_DIR + 'nuevo_viaje.png'
-#         ,IMG_DIR + 'listado.png'
-#     )
-    
-    
-#     not_error = verificar_iconos(iconos)
-    
-#     if not_error:
-#         print("asdfasfdas")
-#         mi_app = AgenciaDeViaje(iconos)
+            return False
         
         
-#     return 0
-
-# if __name__ == '__main__':
-#     main()
+    return True
     
 def main():
-    """ Iniciar aplicacion """
-    # app_carpeta = os.path.dirname(__file__)
     
-    IMG_DIR = os.path.dirname(__file__) + os.sep + 'imagenes' + os.sep
-    
-    print("La ruta de la carpeta esta en: ", os.path.dirname(__file__))
-    
-    # declarar y verificar iconos de la aplicacion:
+    IMG_DIR = os.path.dirname(__file__) + os.sep + 'imagen' + os.sep
+
+
     iconos = (
-         IMG_DIR + "icono-app.png"
-        ,IMG_DIR + "alta.png"
-        ,IMG_DIR + "listado.png"
-        ,IMG_DIR + "cargar.png"
-        ,IMG_DIR + "salir32x32.png"
+        IMG_DIR + 'plane_icon.png'
+        ,IMG_DIR + 'alta.png'
+        ,IMG_DIR + 'carga.png'
+        ,IMG_DIR + 'nuevo_viaje.png'
+        ,IMG_DIR + 'listado.png'
     )
     
-    error1 = verificar_iconos(iconos)
     
-    if not error1:
+    not_error = verificar_iconos(iconos)
+    
+    if not_error:
+        print("asdfasfdas")
         mi_app = AgenciaDeViaje(iconos)
+        
+        
     return 0
-
-
 
 if __name__ == '__main__':
     main()

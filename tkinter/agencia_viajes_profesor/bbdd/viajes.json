@@ -2,47 +2,41 @@
     "Lanzarote-Gran Canaria": {
         "origen": "Lanzarote",
         "destino": "Gran Canaria",
-        "avion": "Airbus 319",
+        "avion": "Airbus 320",
         "billetes_comprados": {
             "1": {
                 "viaje": "Lanzarote-Gran Canaria",
                 "nombre": "Juan Rafael",
                 "apellidos": "Curbelo Arrocha"
+            },
+            "2": {
+                "viaje": "Lanzarote-Gran Canaria",
+                "nombre": "Andr\u00e9s",
+                "apellidos": "Calamaro"
             }
         }
     },
-    "Tenerife-Madrid": {
-        "origen": "Tenerife",
-        "destino": "Madrid",
-        "avion": "Airbus 321",
+    "Fuerteventura-Gran Canaria": {
+        "origen": "Fuerteventura",
+        "destino": "Gran Canaria",
+        "avion": "Airbus 320",
         "billetes_comprados": {
             "1": {
-                "viaje": "Tenerife-Madrid",
-                "nombre": "Juan Rafael",
-                "apellidos": "Curbelo Arrocha"
-            }
-        }
-    },
-    "Barcelona-Madrid": {
-        "origen": "Barcelona",
-        "destino": "Madrid",
-        "avion": "Boeing 737",
-        "billetes_comprados": {
-            "1": {
-                "viaje": "Barcelona-Madrid",
+                "viaje": "Fuerteventura-Gran Canaria",
                 "nombre": "Juan Rafael",
                 "apellidos": "Curbelo Arrocha"
             },
             "2": {
-                "viaje": "Barcelona-Madrid",
-                "nombre": "Jaime",
-                "apellidos": "Garc\u00eda"
-            },
-            "3": {
-                "viaje": "Barcelona-Madrid",
-                "nombre": "adfasf",
-                "apellidos": "sadf"
+                "viaje": "Fuerteventura-Gran Canaria",
+                "nombre": "Andr\u00e9s",
+                "apellidos": "Calamaro"
             }
         }
+    },
+    "Tenerife-La Palma": {
+        "origen": "Tenerife",
+        "destino": "La Palma",
+        "avion": "Boeing 747",
+        "billetes_comprados": {}
     }
 }
