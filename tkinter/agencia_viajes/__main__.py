@@ -277,7 +277,6 @@ class AgenciaDeViajes():
             contenido_viajes = str(self.viajes[key_viaje])
             viaje = self.viajes[key_viaje]
             if texto_filtrado == '' or texto_filtrado in contenido_viajes.lower():
-                billetes = {}
                 self.treeview.heading('#0',        text   = "Origen")
                 self.treeview.heading("destino",   text   = "Destino")
                 self.treeview.heading("avion",     text   = "Avion")
