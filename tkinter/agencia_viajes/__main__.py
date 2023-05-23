@@ -291,7 +291,7 @@ class AgenciaDeViajes():
         
                 self.treeview.pack()
         
-        # self.info_filtrar()
+        self.info_filtrar()
         
         
     def info_filtrar(self):
