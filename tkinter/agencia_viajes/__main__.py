@@ -1,61 +1,37 @@
-from viaje import Viaje
-from avion import Avion
 from aeropuerto import Aeropuerto
+from avion import Avion
 from billete import Billete
+from viaje import Viaje
 
-import ast
 import os
+import ast
 from tkinter import *
 from tkinter import ttk, font, messagebox
 from tkinter import filedialog as fd
-import tkinter as tk
 import json
-
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-#
-# name: __main__.py (Python 3.x).
-# description:  Gestión de una agencia de viajes
-# purpose:  Gestión de una agencia de viajes
-# author: Bladimir
-#
-#------------------------------------------------------------
-'''AgenciaDeViajes: Gestión de una agencia de viajes '''
-
-__title__= 'Agencia de Viajes'
-__date__=''
-__version__='0.0.1'
-__license__='GNU GPLv3'
 
 
 class AgenciaDeViajes():
     
-    ventana = 0
-    posx_y = 0
-    
-    '''Clase Agencia de Viajes'''
-    # Declarar metodo constructor de la aplicacion
     ruta_guardado = os.path.dirname(__file__) + os.sep + 'bbdd' + os.sep + 'viajes.json'
-    def __init__(self, img_carpeta, iconos):
-        ''' Definir ventana de la aplicacion, menu, submenus, 
-        menu contextual, barra de herramientas, barra de estado 
-        y atajos del teclado '''
+    
+    
+    def __init__(self, iconos):
+
         
-        
-        self.img_carpeta = img_carpeta
         self.iconos = iconos
         
         self.raiz = Tk()
         
-        self.raiz.title("Agencia de Viajes" + __version__) # Titulo
+        self.raiz.title("Agencia de Viajes")
         
-        self.icono1 = PhotoImage(file=self.iconos[0]) # icono app
-        self.raiz.iconphoto(self.raiz, self.icono1) # Asigna icono app
+        self.icono1 = PhotoImage(file=self.iconos[0]) 
+        self.raiz.iconphoto(self.raiz, self.icono1) 
         
-        self.raiz.option_add('*Font', 'Helvetica 12') # Fuente predeterminada
-        self.raiz.option_add('*tearOff', False) # Deshabilita submenus flotantes
+        self.raiz.option_add('*Font', 'Helvetica 12')
+        self.raiz.option_add('*tearOff', False) 
         
-        self.raiz.minsize(400,300) # Establece tamaño minimo ventana
+        self.raiz.minsize(500,300)
         
         self.fuente = font.Font(weight='normal')
         
@@ -64,19 +40,17 @@ class AgenciaDeViajes():
         (Estos valores se podrian leer de un archivo de 
         configuración)
         """
-        self.nombre = StringVar(value="")
-        self.apellidos = StringVar(value="")
-        self.viaje = StringVar(value="")
-        self.origen = StringVar(value="")
-        self.destino = StringVar(value="")
-        self.avion = StringVar(value="")
-        self.filtro = StringVar(value="")
+        self.nombre     = StringVar(value="")
+        self.apellidos  = StringVar(value="")
+        self.viaje      = StringVar(value="")
+        self.origen     = StringVar(value="")
+        self.destino    = StringVar(value="")
+        self.avion      = StringVar(value="")
+        self.filtro     = StringVar(value="")
+        
         
         self.viajes = self.leer_viajes()
         
-        # Barra de Estado
-        self.estado = IntVar()
-        self.estado.set(1) # mostrar Barra de Estado
         
         # Definir barra de menu de la aplicacion:
         barramenu = Menu(self.raiz)
@@ -139,7 +113,7 @@ class AgenciaDeViajes():
         
         self.frame.config(bg='lightblue')
         
-        self.frame.config(width=400, height=300)
+        self.frame.config(width=500, height=300)
         self.frame.pack(side=TOP)
         
         # Declarar teclas de acceso rapido:
@@ -153,16 +127,16 @@ class AgenciaDeViajes():
         
         
         
-    def destruir_frames(self):
-        for widget in self.frame.winfo_children():
-            widget.destroy()
-            
+        
     def destruir_frames_viajes(self):
         for widget in self.frame_viajes.winfo_children():
             widget.destroy()
         
-        
-        
+    def destruir_frames(self):
+        for widget in self.frame.winfo_children():
+            widget.destroy()
+            
+
         
     def leer_viajes(self, ruta = ruta_guardado):
         f = open(ruta, 'r')
@@ -229,10 +203,14 @@ class AgenciaDeViajes():
             errores = True
             texto_errores += error.args[1]
             
+            
+            
         if errores:
             messagebox.showerror('Hay errores en el formulario', texto_errores)
         else:
+            self.viajes[nuevo_billete.viaje] = viaje_seleccionado
             self.guardar_fichero()
+            messagebox.showinfo("Agregado", "Se ha guardado el billete con éxito")
         
         
         
@@ -243,25 +221,18 @@ class AgenciaDeViajes():
         
         opciones = self.viajes.keys()
         
-        etiqueta_alta = ttk.Label(self.frame, text='alta billetes')
+        etiqueta_viajes    = ttk.Label(self.frame, text='Viajes:', justify='left', width=40, padding=[10])
+        etiqueta_nombre    = ttk.Label(self.frame, text='Nombre', justify='left', width=40, padding=[10])
+        etiqueta_apellidos = ttk.Label (self.frame, text='Apellidos', justify='left', width=40, padding=[10])
         
-        etiqueta_viajes = ttk.Label(self.frame, text='Viajes:', justify='left', width=40, padding=[10])
         
         select_viajes = OptionMenu(self.frame, self.viaje, *opciones)
         
-        etiqueta_nombre = ttk.Label(self.frame, text='Nombre', justify='left', width=40, padding=[10])
-        
         nombre = ttk.Entry(self.frame, justify='left', textvariable=self.nombre)
-        
-        etiqueta_apellidos = ttk.Label (self.frame, text='Apellidos', justify='left', width=40, padding=[10])
-        
         apellidos = ttk.Entry(self.frame, justify='left', textvariable=self.apellidos)
         
         guardar = ttk.Button(self.frame, text='Guardar', command=self.guardar_billete)
         
-        
-        
-        etiqueta_alta.pack(side=TOP)
         
         etiqueta_viajes.pack(side=TOP, fill=BOTH, expand=True, padx=5, pady=5)
         select_viajes.pack(side=TOP, fill=BOTH, padx=5, pady=5)
@@ -287,6 +258,10 @@ class AgenciaDeViajes():
         filtrar = ttk.Button(self.frame, text="Filtrar", command=self.filtrar)
         filtrar.pack(side=TOP, fill=BOTH, expand=True, padx=5, pady=5)
         
+        etiqueta_listado = ttk.Label(self.frame, text="Listado de viajes:", justify="left", width=40, padding=[10])
+        etiqueta_listado.pack(side=TOP, fill=BOTH, expand=True, padx=5, pady=5)
+        
+        
         self.frame_viajes = Frame(self.frame)
         self.frame_viajes.pack(side=TOP)
         
@@ -294,7 +269,7 @@ class AgenciaDeViajes():
         self.info_filtrar()
         
         
-    def info_filtrar(self, textto_filtrado = ''):
+    def info_filtrar(self, texto_filtrado =""):
         
         scrollbar = Scrollbar(self.frame_viajes)
         scrollbar.pack(side="right", fill="y")
@@ -309,11 +284,11 @@ class AgenciaDeViajes():
         for key_viajes in self.viajes:
             contenido_viajes = str(self.viajes[key_viajes])
             
-            if textto_filtrado == '' or textto_filtrado.lower() in contenido_viajes.lower():
+            if texto_filtrado == '' or texto_filtrado.lower() in contenido_viajes.lower():
                 
                 self.treeview_viajes.insert(
-                    ""
-                    , tk.END
+                      ""
+                    , END
                     , text=self.viajes[key_viajes].origen.sede
                     , values=(self.viajes[key_viajes].destino.sede, self.viajes[key_viajes].avion.modelo, self.viajes[key_viajes].avion.capacidad)
                 )
@@ -328,7 +303,6 @@ class AgenciaDeViajes():
                 
                 
         
-    
     def carga_externa(self):
         self.destruir_frames()
         
@@ -377,7 +351,7 @@ class AgenciaDeViajes():
             texto_errores += "- No se ha especificado un avion.\n"
         if self.origen.get() and self.origen.get() == self.destino.get():
             texto_errores += "- Origen, no puede ser igual a destino.\n"
-        if self.viajes.get(self.origen.get() +"-"+ self.destino.get()):
+        if self.viajes.get(self.origen.get() + '-' + self.destino.get()):
             texto_errores += "- El viaje ya se encuentra en nuestra BBDD.\n"
             
         if texto_errores:
@@ -390,7 +364,7 @@ class AgenciaDeViajes():
             
     
     def guardar_fichero(self):
-        f = open(self.ruta_guardado, 'w')
+        f = open(self.ruta_guardado,'w')
 
         dict_viajes = {}
 
@@ -437,40 +411,37 @@ class AgenciaDeViajes():
 # Funciones de la aplicacion
 
 def verificar_iconos(iconos):
-    """ 
-    Verificar existencia de iconos
-    iconos -- Lista de iconos
-    """
+
     for icono in iconos:
         if not os.path.exists(icono):
-            print('Icono no encontrado: ', icono)
-            return 1
+            return False
         
-    return 0
+    return True
 
 def main():
-    """ Iniciar aplicacion """
-    app_carpeta = os.getcwd()
     
-    print("La ruta de la carpeta esta en: ", app_carpeta)
     
-    img_carpeta = app_carpeta + os.sep + 'tkinter/agencia_viajes/imagenes' + os.sep
+    print("La ruta de la carpeta esta en: ", os.path.dirname(__file__))
+    
+    IMG_DIR = os.path.dirname(__file__) + os.sep + 'imagenes' + os.sep
     
     # declarar y verificar iconos de la aplicacion:
     iconos = (
-         img_carpeta + "icono-app.png"
-        ,img_carpeta + "alta.png"
-        ,img_carpeta + "listado.png"
-        ,img_carpeta + "cargar.png"
-        ,img_carpeta + "conec32x32.png"
-        ,img_carpeta + "salir32x32.png"
+         IMG_DIR + "icono-app.png"
+        ,IMG_DIR + "alta.png"
+        ,IMG_DIR + "listado.png"
+        ,IMG_DIR + "cargar.png"
+        ,IMG_DIR + "conec32x32.png"
+        ,IMG_DIR + "salir32x32.png"
     )
     
-    error1 = verificar_iconos(iconos)
+    not_error = verificar_iconos(iconos)
     
-    if not error1:
-        mi_app = AgenciaDeViajes(img_carpeta, iconos)
-    return(0)
+    if not_error:
+        print("Entrada con éxito")
+        mi_app = AgenciaDeViajes(iconos)
+        
+    return 0
 
 if __name__ == '__main__':
     main()
