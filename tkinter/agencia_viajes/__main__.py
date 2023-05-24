@@ -9,6 +9,7 @@ from tkinter import *
 from tkinter import ttk, font, messagebox
 from tkinter import filedialog as fd
 import tkinter as tk
+import json
 
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
@@ -86,6 +87,7 @@ class AgenciaDeViajes():
         icono3 = PhotoImage(file=self.iconos[2])
         icono4 = PhotoImage(file=self.iconos[3])
         icono5 = PhotoImage(file=self.iconos[4])
+        icono6 = PhotoImage(file=self.iconos[5])
         
         barramenu.add_command(
              label        = 'Alta'
@@ -115,11 +117,20 @@ class AgenciaDeViajes():
         )
         
         barramenu.add_command(
+            label         = "Nuevo Viaje"
+            ,command      = self.nuevo_viaje
+            ,underline    = 0
+            ,accelerator  = 'Ctrl+o'
+            ,image        = icono5
+            ,compound     =LEFT
+        )
+        
+        barramenu.add_command(
              label        = 'Salir'
             ,command      = self.salir
             ,underline    = 0
             ,accelerator  = "Ctrl+s"
-            ,image        = icono5
+            ,image        = icono6
             ,compound     = LEFT
         )
         
@@ -135,12 +146,19 @@ class AgenciaDeViajes():
         self.raiz.bind("<Control-a>", lambda event: self.alta_billete())
         self.raiz.bind("<Control-l>", lambda event: self.listado_viajes())
         self.raiz.bind("<Control-c>", lambda event: self.carga_externa())
+        self.raiz.bind("<Control-o>", lambda event: self.nuevo_viaje())
         self.raiz.bind("<Control-s>", lambda event: self.salir())
         
         self.raiz.mainloop()
         
+        
+        
     def destruir_frames(self):
         for widget in self.frame.winfo_children():
+            widget.destroy()
+            
+    def destruir_frames_viajes(self):
+        for widget in self.frame_viajes.winfo_children():
             widget.destroy()
         
         
@@ -208,6 +226,7 @@ class AgenciaDeViajes():
         try:
             viaje_seleccionado.billetes_comprados = nuevo_billete
         except Exception as error:
+            errores = True
             texto_errores += error.args[1]
             
         if errores:
@@ -256,11 +275,8 @@ class AgenciaDeViajes():
         guardar.pack(side=TOP, fill=BOTH, padx=5, pady=5)
 
     
-    def listado_viajes(self, texto_filtrado = ""):
+    def listado_viajes(self):
         self.destruir_frames()
-        
-        etiqueta_lista = ttk.Label(self.frame, text='Listado de viajes:', justify='left', width=40, padding=[10])
-        etiqueta_lista.pack(side=TOP, fill=BOTH, expand=True, padx=5, pady=5)
         
         etiqueta_filtro = ttk.Label(self.frame, text='Filtro:', justify='left', width=40, padding=[10])
         etiqueta_filtro.pack(side=TOP, fill=BOTH, expand=True, padx=5, pady=5)
@@ -268,52 +284,124 @@ class AgenciaDeViajes():
         filtro = ttk.Entry(self.frame, justify='left', textvariable=self.filtro)
         filtro.pack(side=TOP, fill=BOTH, expand=True, padx=5, pady=5)
         
+        filtrar = ttk.Button(self.frame, text="Filtrar", command=self.filtrar)
+        filtrar.pack(side=TOP, fill=BOTH, expand=True, padx=5, pady=5)
+        
         self.frame_viajes = Frame(self.frame)
-        #self.frame.config(width=400, height=300)
         self.frame_viajes.pack(side=TOP)
         
-        self.treeview = ttk.Treeview(self.frame_viajes, columns= ("destino", "avion", "capacidad"))
-        for key_viaje in self.viajes:
-            contenido_viajes = str(self.viajes[key_viaje])
-            viaje = self.viajes[key_viaje]
-            if texto_filtrado == '' or texto_filtrado in contenido_viajes.lower():
-                self.treeview.heading('#0',        text   = "Origen")
-                self.treeview.heading("destino",   text   = "Destino")
-                self.treeview.heading("avion",     text   = "Avion")
-                self.treeview.heading("capacidad", text   = "Capacidad")
-
-                self.treeview.insert(
-                    ""
-                    ,tk.END
-                    ,text   = viaje.origen.sede
-                    ,values = (viaje.destino.sede, viaje.avion.modelo, viaje.avion.capacidad)
-                )
-        
-                self.treeview.pack()
         
         self.info_filtrar()
         
         
-    def info_filtrar(self):
-        pass
+    def info_filtrar(self, textto_filtrado = ''):
+        
+        scrollbar = Scrollbar(self.frame_viajes)
+        scrollbar.pack(side="right", fill="y")
+        
+        self.treeview_viajes = ttk.Treeview(self.frame_viajes, columns=('destino', 'avion', 'capacidad'), yscrollcommand= scrollbar.set)
+        
+        self.treeview_viajes.heading("#0"       , text="Origen")
+        self.treeview_viajes.heading("destino"  , text="Destino")
+        self.treeview_viajes.heading("avion"    , text="Avion")
+        self.treeview_viajes.heading("capacidad", text="Capacidad")
+        
+        for key_viajes in self.viajes:
+            contenido_viajes = str(self.viajes[key_viajes])
+            
+            if textto_filtrado == '' or textto_filtrado.lower() in contenido_viajes.lower():
+                
+                self.treeview_viajes.insert(
+                    ""
+                    , tk.END
+                    , text=self.viajes[key_viajes].origen.sede
+                    , values=(self.viajes[key_viajes].destino.sede, self.viajes[key_viajes].avion.modelo, self.viajes[key_viajes].avion.capacidad)
+                )
+                
+        scrollbar.config(command=self.treeview_viajes.yview)
+        self.treeview_viajes.pack()
+    
+    def filtrar(self):
+        self.destruir_frames_viajes()
+        
+        self.info_filtrar(self.filtro.get())
                 
                 
-        
-        
-        
         
     
     def carga_externa(self):
         self.destruir_frames()
         
-        etiqueta_carga = ttk.Label(self.frame, text='Cargar viajes:', justify='left', width=40, padding=[10])
-        etiqueta_carga.pack(side=TOP)
+        ruta_datos_externos = fd.askopenfilename(initialdir="/", title="Seleccione archivo de carga externa", filetypes=(("json files","*.json"), ("todos los archivos", "*.*")))
+        
+        viajes_externos = self.leer_viajes(ruta_datos_externos)
+        
+        self.viaje.update(viajes_externos)
+        
+        self.guardar_fichero()
+        
+    
+    def nuevo_viaje(self):
+        self.destruir_frames()
+        
+        etiqueta_origen  = ttk.Label(self.frame, text="Origen: ", justify="left", width=40, padding=[10])
+        etiqueta_destino = ttk.Label(self.frame, text="Destino: ", justify="left", width=40, padding=[10])
+        etiqueta_avion   = ttk.Label(self.frame, text="Avion: ", justify="left", width=40, padding=[10])
+        
+        select_origen  = OptionMenu(self.frame, self.origen, *Aeropuerto.listado)
+        select_destino = OptionMenu(self.frame, self.destino, *Aeropuerto.listado)
+        select_avion   = OptionMenu(self.frame, self.avion, *Avion.modelos.keys())
+        
+        guardar = ttk.Button(self.frame, text="Guardar", command=self.guardar_viaje())
+        
+        etiqueta_origen.pack(side=TOP, fill=BOTH, padx=5, pady=5)
+        select_origen.pack(side=TOP, fill=BOTH, padx=5, pady=5)
+        
+        etiqueta_destino.pack(side=TOP, fill=BOTH, padx=5, pady=5)
+        select_destino.pack(side=TOP, fill=BOTH, padx=5, pady=5)
+        
+        etiqueta_avion.pack(side=TOP, fill=BOTH, padx=5, pady=5)
+        select_avion.pack(side=TOP, fill=BOTH, padx=5, pady=5)
+        
+        
+        guardar.pack(side=TOP, fill=BOTH, padx=5, pady=5)
+        
+    def guardar_viaje(self):
+        texto_errores = ''
+        
+        if not self.origen.get():
+            texto_errores += "- No se ha especificado un origen.\n"
+        if not self.destino.get():
+            texto_errores += "- No se ha especificado un destino.\n"
+        if not self.avion.get():
+            texto_errores += "- No se ha especificado un avion.\n"
+        if self.origen.get() and self.origen.get() == self.destino.get():
+            texto_errores += "- Origen, no puede ser igual a destino.\n"
+        if self.viajes.get(self.origen.get() +"-"+ self.destino.get()):
+            texto_errores += "- El viaje ya se encuentra en nuestra BBDD.\n"
+            
+        if texto_errores:
+            messagebox.showerror("Hay errores en el formulario", texto_errores)
+        else:
+            viaje = Viaje(Aeropuerto(self.origen.get()), Aeropuerto(self.destino.get()), Avion(self.avion.get()))
+            self.viajes[self.origen.get() + '-' + self.destino.get()] = viaje
+            self.guardar_fichero()
+            messagebox.showinfo("Exito", "Viaje creado correctamente")
+            
+    
+    def guardar_fichero(self):
+        f = open(self.ruta_guardado, 'w')
+
+        dict_viajes = {}
+
+        for viaje in self.viajes:
+            dict_viajes.update(self.viajes[viaje].diccionario())
+
+        f.write(json.dumps(dict_viajes, ident=4))
+
     
         
     def salir(self):
-        # Implementar una ventana salir para salir para 
-        # preguntar al cliente si esta seguro de salir de
-        # la aplicacion.
         self.destruir_frames()
         self.abrir_ventana()
         
@@ -325,10 +413,7 @@ class AgenciaDeViajes():
     def abrir_ventana(self):
         
         self.ventana = Toplevel()
-        # AgenciaDeViajes.ventana += 1
-        # AgenciaDeViajes.posx_y += 50
-        
-        # tamypos = '200x100+' + str(AgenciaDeViajes.posx_y) + '+' + str(AgenciaDeViajes.posx_y)
+
         self.ventana.geometry()
         self.ventana.resizable(0,0)
         self.ventana.title('Salir')
@@ -347,8 +432,6 @@ class AgenciaDeViajes():
         self.ventana.grab_set()
         self.raiz.wait_window(self.ventana)
         
-    def guardar_fichero(self):
-        pass
         
         
 # Funciones de la aplicacion
@@ -379,6 +462,7 @@ def main():
         ,img_carpeta + "alta.png"
         ,img_carpeta + "listado.png"
         ,img_carpeta + "cargar.png"
+        ,img_carpeta + "conec32x32.png"
         ,img_carpeta + "salir32x32.png"
     )
     
