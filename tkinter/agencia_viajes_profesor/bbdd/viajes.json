@@ -38,5 +38,17 @@
         "destino": "La Palma",
         "avion": "Boeing 747",
         "billetes_comprados": {}
+    },
+    "Fuerteventura-Tenerife": {
+        "origen": "Fuerteventura",
+        "destino": "Tenerife",
+        "avion": "Airbus 320",
+        "billetes_comprados": {
+            "1": {
+                "viaje": "Fuerteventura-Tenerife",
+                "nombre": "bladimir",
+                "apellidos": "peralta herrera"
+            }
+        }
     }
 }
