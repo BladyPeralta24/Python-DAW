@@ -292,9 +292,16 @@ class AgenciaDeViaje():
         etiqueta_destino = ttk.Label(self.frame , text="Destino: " , justify="left", width=40, padding=[10])
         etiqueta_avion   = ttk.Label(self.frame , text="Avión: " , justify="left", width=40, padding=[10])
         
-        select_origen  = OptionMenu(self.frame, self.origen, *Aeropuerto.listado)
-        select_destino = OptionMenu(self.frame, self.destino, *Aeropuerto.listado)
-        select_avion   = OptionMenu(self.frame, self.avion, *Avion.modelos.keys())
+        # select_origen  = OptionMenu(self.frame, self.origen, *Aeropuerto.listado)
+        # select_destino = OptionMenu(self.frame, self.destino, *Aeropuerto.listado)
+        # select_avion   = OptionMenu(self.frame, self.avion, *Avion.modelos.keys())
+        
+        select_origen  = ttk.Combobox(self.frame, textvariable=self.origen, values= Aeropuerto.listado)
+        select_origen.set("Elija una opcion")
+        select_destino = ttk.Combobox(self.frame, textvariable=self.destino, values= Aeropuerto.listado)
+        select_destino.set("Elija una opcion")
+        select_avion   = ttk.Combobox(self.frame, textvariable=self.avion, values = list(Avion.modelos.keys()))
+        select_avion.set("Elija una opcion")
         
         guardar = ttk.Button(self.frame, text="Guardar", command=self.guardar_viaje)
         

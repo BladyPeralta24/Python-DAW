@@ -50,5 +50,11 @@
                 "apellidos": "peralta herrera"
             }
         }
+    },
+    "El Hierro-La Gomera": {
+        "origen": "El Hierro",
+        "destino": "La Gomera",
+        "avion": "Airbus 321",
+        "billetes_comprados": {}
     }
 }
