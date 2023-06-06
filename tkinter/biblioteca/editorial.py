@@ -5,7 +5,7 @@ class Editorial():
     
     listado = ['Editorial 1', 'Editorial 2', 'Editorial 3', 'Editorial 4']
     
-    def __init__(self, editorial):
+    def __init__(self, editorial = ''):
         
         self.ditorial = editorial
         

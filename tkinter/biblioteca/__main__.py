@@ -166,12 +166,11 @@ class GestionBiblioteca():
             
             
         try:
-            nuevo_editorial.cod_editorial = self.editorial.get()
+            nuevo_editorial.editorial = self.editorial.get()
         except:
             errores = True
             texto_errores += "- No se ha seleccionado un editorial"
-        else:
-            editorial_seleccionado = self.editorial.get(nuevo_editorial.cod_editorial)
+        
             
         try:
             nuevo_libro.autor = self.autor.get()

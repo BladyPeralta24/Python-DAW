@@ -6,7 +6,7 @@ class Biblioteca():
     
     listado_anho = ["2021", "2020", "2019", "2018", "2017", "2016"]
     
-    def __init__(self, libro, autor, editorial: Editorial, anho):
+    def __init__(self, libro = '', autor = '', editorial: Editorial = '', anho = ''):
         
         self.__libro = libro
         self.__autor = autor
