@@ -65,14 +65,14 @@ class Biblioteca():
         
         diccionario = {}
         
-        diccionario[Editorial.cod_editorial] = {
+        diccionario[Editorial.editorial] = {
             "nombre"     : self.__libro
             ,"autor"     : self.__autor
-            ,"editorial" : Editorial.cod_editorial
+            ,"editorial" : Editorial.editorial
             ,"Año"       : self.__anho
         }
         
         return diccionario
     
     def __str__(self) -> str:
-        return f"Nombre: {self.__libro} Autor: {self.__autor}, Editorial: {Editorial.cod_editorial}, Año: {self.__anho}"
+        return f"Nombre: {self.__libro} Autor: {self.__autor}, Editorial: {Editorial.editorial}, Año: {self.__anho}"

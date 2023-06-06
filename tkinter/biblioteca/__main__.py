@@ -186,7 +186,7 @@ class GestionBiblioteca():
             messagebox.showinfo("Agregado", "Se ha guardado el libro con exito")
             
     def guardar_fichero(self):
-        f = open(self.ruta_guardado, 'w')
+        f = open(self.ruta_guardado,'w')
         
         dict_libros = {}
         
