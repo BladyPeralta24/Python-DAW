@@ -209,8 +209,8 @@ class AgenciaDeViaje():
         for viaje in self.viajes: 
             dict_viajes.update(self.viajes[viaje].diccionario())
         #hace lo mismo    
-        #for key_viaje, viaje in self.viajes.items(): 
-        #    dict_viajes.update(viaje.diccionario())
+        # for key_viaje, viaje in self.viajes.items(): 
+            # dict_viajes.update(viaje.diccionario())
             
         f.write(json.dumps(dict_viajes, indent=4))
             

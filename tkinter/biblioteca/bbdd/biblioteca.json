@@ -1,1 +1,10 @@
-{}
+{
+    "Editorial 1": {
+        "1":{
+            "nombre": "mama"
+            ,"autor": "mama"
+            ,"editorial": "Editorial 1"
+            ,"Año": "2021" 
+        }
+    }
+}

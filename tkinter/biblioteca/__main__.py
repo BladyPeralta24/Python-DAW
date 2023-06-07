@@ -275,7 +275,7 @@ class GestionBiblioteca():
             
             dict_libros[key]
             
-            libro = Biblioteca(dict_libros[key]['libro'], dict_libros[key]['autor'], Editorial(dict_libros[key]['editorial']), dict_libros[key]['anho'])
+            libro = Biblioteca(dict_libros[key]['libro'], dict_libros[key]['autor'], dict_libros[key]['editorial'], dict_libros[key]['anho'])
             
             for nlibro in dict_libros[key]['editoria']:
                 nuevo_libro = dict_libros[key]['editorial'][nlibro]

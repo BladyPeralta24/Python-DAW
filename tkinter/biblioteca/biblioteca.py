@@ -64,11 +64,17 @@ class Biblioteca():
     def diccionario(self):
         
         diccionario = {}
+        diccionario_editorial = {}
         
-        diccionario[Editorial.editorial] = {
-            "nombre"     : self.__libro
-            ,"autor"     : self.__autor
-            ,"editorial" : Editorial.editorial
+        i = 1
+        for editorial in self.__editorial:
+            diccionario_editorial[i] = editorial.diccionario()
+            i += 1
+        
+        diccionario[self.__editorial] = {
+             "Nombre"    : self.__libro
+            ,"Autor"     : self.__autor
+            ,"Editorial" : self.__editorial
             ,"Año"       : self.__anho
         }
         
