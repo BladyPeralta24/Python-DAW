@@ -19,6 +19,6 @@ class Editorial():
         if nuevo_valor in Editorial.listado:
             self.__editorial = nuevo_valor
         else:
-            raise Exception('cod_editorial', 'La editorial no se encuentra en nuestro listado')
+            raise Exception('editorial', 'La editorial no se encuentra en nuestro listado')
         
         

@@ -75,4 +75,4 @@ class Biblioteca():
         return diccionario
     
     def __str__(self) -> str:
-        return f"Nombre: {self.__libro} Autor: {self.__autor}, Editorial: {Editorial.editorial}, Año: {self.__anho}"
+        return f"Nombre: {self.__libro} Autor: {self.__autor}, Editorial: {self.__editorial}, Año: {self.__anho}"
