@@ -3,17 +3,17 @@ import mysql.connector
 class BBDD:
     
     def __init__(self):
-
+        
         BBDD_HOST = 'localhost'
         BBDD_USER = 'bladimir'
         BBDD_PASS = 'America10'
         BBDD_BBDD = 'agencia_de_viajes'
 
         self.conexion = mysql.connector.connect(
-            host = BBDD_HOST,
-            user = BBDD_USER,
-            passwd = BBDD_PASS,
-            db = BBDD_BBDD
+            host    = BBDD_HOST,
+            user    = BBDD_USER,
+            passwd  = BBDD_PASS,
+            db      = BBDD_BBDD
         )
 
         self.cursor = self.conexion.cursor()
