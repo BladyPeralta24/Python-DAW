@@ -5,7 +5,7 @@ class BBDD:
     def __init__(self):
 
         BBDD_HOST = 'localhost'
-        BBDD_USER = 'root'
+        BBDD_USER = 'bladimir'
         BBDD_PASS = 'America10'
         BBDD_BBDD = 'agencia_de_viajes'
 
