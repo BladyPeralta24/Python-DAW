@@ -1,4 +1,4 @@
-
+from bbdd import Query
 
 from aeropuerto import Aeropuerto
 from avion import Avion
@@ -80,5 +80,26 @@ class Viaje():
 
         return diccionario
     
+    def guardar(self):
+        id_origen  = self.__origen.id()
+        id_destino = self.__destino.id()
+        id_avion   = self.__avion.id()
+        
+        datos_avion = Query.ejec(f'select id_viaje from viajes where id_avion = "{id_avion}" and id_origen = "{id_origen}" and id_destino = "{id_destino}" ')
+        
+        if not datos_avion:
+            Query.ejec(f"insert into viajes (id_origen, id_destino, id_avion) values('{id_origen}', '{id_destino}', '{id_avion}')")
+        else:
+            raise Exception('viajes', 'El viaje ya se encuentra dado de alta')
+        
+        
+    
     def __str__(self):
         return f"Origen: {self.__origen.sede} Destino: {self.__destino.sede} Avion: {self.__avion.modelo} Capacidad: {self.__avion.capacidad}"
+    
+    
+
+# viaje = Viaje(Aeropuerto('Las Palmas'),Aeropuerto('Londres'), Avion('Boeing737'))
+
+
+# viaje.guardar()

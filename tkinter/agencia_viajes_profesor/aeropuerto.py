@@ -1,3 +1,6 @@
+
+from bbdd import Query
+
 class Aeropuerto():
     
     
@@ -5,7 +8,17 @@ class Aeropuerto():
     
     
     def __init__(self, sede):
-        self.sede = sede
+        
+        if sede:
+            if len(self.listado) == 0:
+                print("Cargando listado de BBDD...")
+                datos = Query.ejec("select * from aeropuertos;")
+                for aeropuerto in datos:
+                    self.listado.append(aeropuerto[1])
+                    
+            aeropuerto = Query.ejec("select * from aeropuerto where sede = '"+ sede +"';")
+            
+            self.sede = aeropuerto[0][1]
     
     
     @property
@@ -18,3 +31,20 @@ class Aeropuerto():
             self.__sede = nueva_sede
         else:
             raise Exception('sede', 'La sede introducida no se encuentra en nuestro listado')
+        
+    @staticmethod
+    def nueva_sede(nueva_sede):
+        
+        bandera = False
+        
+        if not (nueva_sede in Aeropuerto.listado):
+            Aeropuerto.listado.append(nueva_sede)
+            Query.ejec("insert into aeropuerto (sede) values('"+ nueva_sede +"');")
+            bandera = True
+            
+        return bandera
+    
+    def id(self):
+        aeropuerto = Query.ejec("select id_aeropuerto from aeropuerto where sede = '"+ self.sede +"';")
+        
+        return aeropuerto[0][0]

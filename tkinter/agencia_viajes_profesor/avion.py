@@ -13,7 +13,7 @@ class Avion():
     }
     
     def __init__(self, modelo):
-        self.modelo = modelo
+        self.__modelo = modelo
         
         
         

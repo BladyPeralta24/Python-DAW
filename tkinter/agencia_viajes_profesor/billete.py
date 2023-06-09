@@ -1,4 +1,6 @@
+from bbdd import Query
 
+from aeropuerto import Aeropuerto
 
 class Billete():
     
@@ -50,6 +52,29 @@ class Billete():
             ,'nombre'    : self.__nombre
             ,'apellidos' : self.__apellidos
         }
+        
+        
+    def guardar(self):
+        
+        lista_viaje = self.__viaje.split('-')
+        
+        origen = lista_viaje[0]
+        destino = lista_viaje[1]
+        
+        aeropuerto_origen = Aeropuerto(origen)
+        aeropuerto_destino = Aeropuerto(destino)
+        
+        query_viaje = Query.ejec(f"SELECT id_viaje FROM viaje WHERE id_origen = '{aeropuerto_origen.id()}' and id_destino = '{aeropuerto_destino.id()}'");
+        
+        id_viaje = query_viaje[0][0]
+        
+        datos_viaje = Query.ejec(f"SELECT id_billete FROM billete WHERE nombre = '{self.__nombre}' AND apellidos = '{self.__apellidos}' AND id_viaje = '{id_viaje}' ")
+        
+        if not datos_viaje :
+            Query.ejec(f"insert into billete (nombre, apellidos, id_viaje) values ('{self.__nombre}','{self.__apellidos}','{id_viaje}');")
+        else:
+            raise Exception ('billete', 'El billete ya se encuentra dado de alta')
+        
             
             
             

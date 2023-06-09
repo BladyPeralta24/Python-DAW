@@ -12,6 +12,7 @@ from viaje import Viaje
 
 from tkinter import filedialog as fd
 
+from bbdd import Query
 import json
 
 class AgenciaDeViaje():
@@ -264,6 +265,52 @@ class AgenciaDeViaje():
         scrollbar.config(command=self.treeview_viajes.yview)
         self.treeview_viajes.pack()
         
+        
+        
+        # dialogo = Toplevel()
+
+        # AgenciaDeViajes.posx_y += 50 
+        # tamypos = '400x300+'+str(AgenciaDeViajes.posx_y)+ '+'+ str(AgenciaDeViajes.posx_y)
+        
+        # #dialogo.geometry(tamypos)
+        # self.scrollbar = ttk.Scrollbar(dialogo)
+        # self.scrollbar.pack(side="right", fill="y")
+
+        # self.treeview = ttk.Treeview(dialogo, columns=('nombre', 'apellidos') , yscrollcommand=self.scrollbar.set)
+
+        # self.treeview.heading("#0"        , text="Viaje")
+        # self.treeview.heading("nombre"    , text="Nombre")
+        # self.treeview.heading("apellidos" , text="Apellidos")
+
+        # for billete in viaje.billetes_comprados:
+        #      self.treeview.insert(
+        #          ""
+        #          ,END
+        #          ,text= billete.viaje
+        #          ,values=(billete.nombre,billete.apellidos)
+                  
+        #      )
+        
+        # self.treeview.bind("<<TreeviewSelect>>", self.item_selected)
+
+        # self.scrollbar.config(command=self.treeview.yview)
+
+
+
+        # self.treeview.pack()
+
+        # # texto_info_billetes = ''
+        # # for billete in viaje.billetes_comprados:
+        # #     texto_info_billetes += str(billete)
+
+        # # text = Text(dialogo)
+        # # text.pack()
+
+        # # text.insert("1.0", texto_info_billetes)
+
+
+        # dialogo.mainloop()
+        
     
     def filtrar(self):
         self.destruir_frames_viajes()
@@ -339,39 +386,66 @@ class AgenciaDeViaje():
     
     def leer_viajes(self, ruta = ruta_guardado):
         
-        f = open(ruta,'r')
+        # f = open(ruta,'r')
         
-        texto = f.read()
+        # texto = f.read()
         
-        dict_viaje = ast.literal_eval(texto)
+        # dict_viaje = ast.literal_eval(texto)
         
         
-        viajes = {}
+        # viajes = {}
         
-        for key  in dict_viaje:
+        # for key  in dict_viaje:
             
             
-            dict_viaje[key]
+        #     dict_viaje[key]
             
-            viaje = Viaje(Aeropuerto(dict_viaje[key]['origen']),Aeropuerto(dict_viaje[key]['destino']),Avion(dict_viaje[key]['avion']))
+        #     viaje = Viaje(Aeropuerto(dict_viaje[key]['origen']),Aeropuerto(dict_viaje[key]['destino']),Avion(dict_viaje[key]['avion']))
         
-            for nbillete in dict_viaje[key]['billetes_comprados']:
-                billete = dict_viaje[key]['billetes_comprados'][nbillete]
+        #     for nbillete in dict_viaje[key]['billetes_comprados']:
+        #         billete = dict_viaje[key]['billetes_comprados'][nbillete]
                 
-                carga_billete = Billete()
+        #         carga_billete = Billete()
                 
-                carga_billete.nombre    = billete.get('nombre')
-                carga_billete.apellidos = billete.get('apellidos')
-                carga_billete.viaje     = billete.get('viaje')
+        #         carga_billete.nombre    = billete.get('nombre')
+        #         carga_billete.apellidos = billete.get('apellidos')
+        #         carga_billete.viaje     = billete.get('viaje')
                 
-                viaje.billetes_comprados = carga_billete
+        #         viaje.billetes_comprados = carga_billete
     
-            viajes[key] = viaje
+        #     viajes[key] = viaje
         
-        print(viajes)    
+        # print(viajes)    
+        
+        # return viajes
+        
+        viajes = []
+        datos_viajes = Query.ejec("SELECT a_origen.sede AS sede_origen, a_destino.sede AS sede_destino, aviones.modelo AS modelo,v.id AS id_viaje FROM viajes AS v LEFT JOIN aeropuertos AS a_origen  ON (  a_origen.id = v.id_origen) LEFT JOIN aeropuertos AS a_destino ON (  a_destino.id = v.id_destino ) LEFT JOIN aviones                  ON (  aviones.id  = v.id_avion)")
+
+        for dato_viaje in datos_viajes:
+
+            viaje = Viaje(Aeropuerto(dato_viaje[0]),Aeropuerto(dato_viaje[1]), Avion(dato_viaje[2]))
+            print(dato_viaje)
+
+            datos_billetes = Query.ejec(f"SELECT nombre, apellido1, apellido2 FROM billetes WHERE id_viaje = '{dato_viaje[3]}'")
+
+            for dato_billete in datos_billetes:
+                carga_billete = Billete()
+
+                carga_billete.nombre    = dato_billete[0]
+                carga_billete.apellido1 = dato_billete[1]
+                carga_billete.apellido2 = dato_billete[2]
+
+                viaje.billetes_comprados = carga_billete
+
+
+            key = viaje.origen.sede + '-'+ viaje.destino.sede
+        
+            viajes[key] = viaje
+            
+        print(viajes)
         
         return viajes
-    
     
 def verificar_iconos(iconos):
     

@@ -31,7 +31,7 @@ VALUES
 
 drop table if exists viaje;
 create table viaje(
-    id_viaje int PRIMARY KEY,
+    id_viaje int PRIMARY KEY auto_increment,
     id_origen int not null,
     id_destino int not null,
     id_avion int not null,
@@ -57,3 +57,5 @@ create table billete(
 INSERT INTO billete 
 VALUES 
 (1, 1,'Bladimir','Peralta Herrera');
+
+alter table viaje auto_increment = 2;
